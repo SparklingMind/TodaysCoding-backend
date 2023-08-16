@@ -1,4 +1,4 @@
-import { PostService } from "../services/post-service";
+// import { PostService } from "../services/post-service.js";
 
 const PostController = {
   async getPost(req, res, next) {

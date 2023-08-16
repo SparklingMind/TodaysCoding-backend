@@ -1,4 +1,4 @@
-import { DayService } from "../services/day-service";
+// import { DayService } from "../services/day-service.js";
 
 const DayController = {
   async getDayInfo(req, res, next) {

@@ -1,14 +1,13 @@
-import cors from "cors";
 import express from "express";
 
 import { userRouter } from "./routers/user-router.js";
-import { categoryRouter } from "./routers/category-router.js";
-import { productRouter } from "./routers/product-router.js";
-import { orderRouter } from "./routers/order-router.js";
+import { todoRouter } from "./routers/todo-router.js";
+import { postRouter } from "./routers/post-router.js";
+import { dayRouter } from "./routers/day-router.js";
 
 const app = express();
 
-app.use(cors());
+// app.use(cors());
 
 // 프론트에서 json 파일을 보내면, req.body에 자동으로 객체 형태로 데이터가 들어가도록 함.
 app.use(express.json());
