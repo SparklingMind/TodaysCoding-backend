@@ -7,6 +7,12 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    // 유저 ID
+    id: {
+      type: String,
+      unique: true,
+      required: true,
+    },
     // 유저 이메일
     email: {
       type: String,
