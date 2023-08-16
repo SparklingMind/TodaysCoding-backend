@@ -27,11 +27,6 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    // 로컬 Date 저장
-    date: {
-      type: String,
-      required: false,
-    },
   },
   {
     collection: "users",

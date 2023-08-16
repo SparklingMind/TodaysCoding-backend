@@ -12,7 +12,14 @@ const postSchema = new Schema(
       type: String,
       required: true,
     },
-    // 한국시간 넣어야 함
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "users",
+    },
+    dateId: {
+      type: Schema.Types.ObjectId,
+      ref: "dates",
+    },
   },
   {
     collection: "users",
