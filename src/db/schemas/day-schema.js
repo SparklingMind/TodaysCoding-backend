@@ -5,6 +5,7 @@ const daySchema = new Schema(
     id: {
       type: Schema.Types.String,
       ref: "users",
+      required: true,
     },
     // 날짜
     date: {
