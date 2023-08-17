@@ -22,7 +22,7 @@ const todoSchema = new Schema(
     },
   },
   {
-    collection: "users",
+    collection: "todos",
     timestamps: true,
   }
 );

@@ -11,6 +11,11 @@ class DayModel {
     });
     return result;
   }
+
+  async find(info) {
+    const result = await Day.find(info);
+    return result;
+  }
 }
 
 const dayModel = new DayModel();

@@ -7,8 +7,8 @@ const postSchema = new Schema(
       type: String,
       required: true,
     },
-    // 할 일 목록
-    post: {
+    // post 내용
+    content: {
       type: String,
       required: true,
     },
@@ -22,7 +22,7 @@ const postSchema = new Schema(
     },
   },
   {
-    collection: "users",
+    collection: "posts",
     timestamps: true,
   }
 );
