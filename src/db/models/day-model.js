@@ -13,7 +13,11 @@ class DayModel {
   }
 
   async find(info) {
-    const result = await Day.find(info);
+    const result = await Day.findOne(info);
+    if (!result) {
+      const newDay = await Day.create(info);
+      return newDay;
+    }
     return result;
   }
 }

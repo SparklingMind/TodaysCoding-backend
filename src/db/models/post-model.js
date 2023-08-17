@@ -19,17 +19,13 @@ class PostModel {
     const result = await Post.findByIdAndUpdate(
       id,
       { title, content },
-      {
-        returnOriginal: false,
-      }
+      { returnOriginal: false }
     );
     return result;
   }
 
   async deletePost(id) {
-    console.log(id);
     const result = await Post.findByIdAndDelete(id);
-    console.log(result);
     return result;
   }
 }

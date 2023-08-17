@@ -13,12 +13,14 @@ const todoSchema = new Schema(
       required: false,
     },
     userId: {
-      type: Schema.Types.ObjectId,
+      type: Schema.Types.String,
       ref: "users",
+      required: true,
     },
     dateId: {
       type: Schema.Types.ObjectId,
       ref: "dates",
+      required: true,
     },
   },
   {

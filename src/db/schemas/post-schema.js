@@ -15,10 +15,12 @@ const postSchema = new Schema(
     userId: {
       type: Schema.Types.String,
       ref: "users",
+      required: true,
     },
     dateId: {
       type: Schema.Types.ObjectId,
       ref: "dates",
+      required: true,
     },
   },
   {
