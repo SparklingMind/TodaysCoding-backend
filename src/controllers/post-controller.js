@@ -1,5 +1,4 @@
 import { PostService } from "../services/post-service.js";
-import { postModel } from "../db/models/post-model.js";
 
 const PostController = {
   async getPost(req, res, next) {

@@ -21,7 +21,6 @@ const PostService = {
     const day = await dayModel.find({ id, date });
     const dateId = day._id;
 
-    console.log(info);
     const result = await postModel.create({
       userId: id,
       dateId,
