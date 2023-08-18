@@ -12,7 +12,7 @@ const TodoController = {
         title,
       });
 
-      res.status(200).json({
+      res.status(201).json({
         title: result.title,
         userId: result.userId,
         id: result._id,

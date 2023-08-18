@@ -29,7 +29,7 @@ const UserController = {
     try {
       const userId = req.params;
       const result = await userModel.findById(userId);
-      res.status(201).json({
+      res.status(200).json({
         id: result.id,
         eamil: result.email,
         name: result.name,
@@ -69,7 +69,7 @@ const UserController = {
     try {
       const userId = req.params;
       const result = await userModel.deleteById(userId);
-      res.status(201).json({
+      res.status(200).json({
         success: !!result,
         id: result.id,
       });
