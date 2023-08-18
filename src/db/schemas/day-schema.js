@@ -2,8 +2,8 @@ import { Schema } from "mongoose";
 
 const daySchema = new Schema(
   {
-    id: {
-      type: Schema.Types.String,
+    userId: {
+      type: Schema.Types.ObjectId,
       ref: "users",
       required: true,
     },

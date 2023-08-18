@@ -1,23 +1,20 @@
 import { TodoService } from "../services/todo-service.js";
 import { todoModel } from "../db/models/todo-model.js";
+import { ObjectId } from "mongodb";
 
 const TodoController = {
   // 할일 그룹(제목) 추가
   async createTodo(req, res, next) {
     try {
-      const { id, date, title } = req.body;
+      const id = new ObjectId(req.params.id);
+      const { date, title } = req.body;
       const result = await TodoService.addTodo({
         id,
         date,
         title,
       });
 
-      res.status(201).json({
-        title: result.title,
-        userId: result.userId,
-        id: result._id,
-        createdAt: result.createdAt,
-      });
+      res.status(201).json(result);
     } catch (error) {
       next(error);
     }
@@ -31,11 +28,7 @@ const TodoController = {
 
       const result = await TodoService.changeTitle({ id, title });
 
-      res.status(200).json({
-        title: result.title,
-        userId: result.userId,
-        id: result._id,
-      });
+      res.status(200).json(result);
     } catch (error) {
       next(error);
     }
@@ -47,11 +40,7 @@ const TodoController = {
       const id = req.params.id;
       const result = await TodoService.removeTodo(id);
 
-      res.status(200).json({
-        title: result.title,
-        userId: result.userId,
-        id: result._id,
-      });
+      res.status(200).json(result);
     } catch (error) {
       next(error);
     }
@@ -63,12 +52,7 @@ const TodoController = {
       const id = req.params.id;
       const todos = req.body;
       const result = await todoModel.addTodoList(id, { todos });
-      res.status(200).json({
-        title: result.title,
-        todos: result.todos,
-        userId: result.userId,
-        id: result._id,
-      });
+      res.status(200).json(result);
     } catch (error) {
       next(error);
     }

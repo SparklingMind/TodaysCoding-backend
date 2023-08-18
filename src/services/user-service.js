@@ -28,7 +28,7 @@ const UserService = {
   async checkUser(userInfo) {
     const { id, password } = userInfo;
 
-    const user = await userModel.findById({ id });
+    const user = await userModel.findByUserId({ id });
 
     if (!user) {
       throw new Error("아이디 확인 필요");
@@ -42,18 +42,18 @@ const UserService = {
     }
 
     const key = process.env.KEY;
-    const token = jwt.sign({ Id: user.id }, key);
+    const token = jwt.sign({ id: user._id }, key);
 
-    return { token };
+    return { token, id: user._id };
   },
 
-  async updateUserInfo(userId, toUpdate) {
+  async updateUserInfo(_id, toUpdate) {
     if (toUpdate.password) {
       const hashedPassword = await bcrypt.hash(password, 10);
       toUpdate.password = hashedPassword;
     }
 
-    const checkUpdate = await userModel.update(userId, toUpdate);
+    const checkUpdate = await userModel.update(_id, toUpdate);
 
     return checkUpdate;
   },

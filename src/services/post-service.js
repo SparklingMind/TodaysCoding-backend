@@ -16,13 +16,12 @@ const PostService = {
   },
 
   async addPost(info) {
-    const { id, date, title, content } = info;
-
-    const day = await dayModel.find({ id, date });
+    const { userId, date, title, content } = info;
+    const day = await dayModel.find({ userId, date });
     const dateId = day._id;
 
     const result = await postModel.create({
-      userId: id,
+      userId,
       dateId,
       title,
       content,

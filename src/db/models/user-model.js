@@ -10,20 +10,25 @@ class UserModel {
     return result;
   }
 
-  // id로 user 찾기
-  async findById(id) {
+  // userId로 user 찾기
+  async findByUserId(id) {
     const result = await User.findOne(id);
+    return result;
+  }
+
+  async findById(id) {
+    const result = await User.findById(id);
     return result;
   }
 
   // id로 user 찾고 삭제
   async deleteById(id) {
-    const result = await User.findOneAndDelete(id);
+    const result = await User.findByIdAndDelete(id);
     return result;
   }
 
-  async update(userId, toUpdate) {
-    const updateInfo = await User.findOneAndUpdate(userId, toUpdate, {
+  async update(_id, toUpdate) {
+    const updateInfo = await User.findByIdAndUpdate(_id, toUpdate, {
       returnOriginal: false,
     });
     console.log(updateInfo);

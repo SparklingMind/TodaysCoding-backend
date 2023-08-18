@@ -1,5 +1,6 @@
 import { UserService } from "../services/user-service.js";
 import { userModel } from "../db/models/user-model.js";
+import { ObjectId } from "mongodb";
 
 const UserController = {
   // 회원 추가(회원가입)
@@ -27,11 +28,12 @@ const UserController = {
   // 사용자 정보 조회(마이페이지)
   async getUser(req, res, next) {
     try {
-      const userId = req.params;
-      const result = await userModel.findById(userId);
+      const id = new ObjectId(req.params.id);
+      console.log(typeof id);
+      const result = await userModel.findById(id);
       res.status(200).json({
         id: result.id,
-        eamil: result.email,
+        email: result.email,
         name: result.name,
       });
     } catch (error) {
@@ -42,7 +44,7 @@ const UserController = {
   // 사용자 정보 수정(마이페이지)
   async updateUser(req, res, next) {
     try {
-      const userId = req.params;
+      const _id = new ObjectId(req.params.id);
       const { id, email, name, password } = req.body;
 
       const toUpdate = {
@@ -52,7 +54,7 @@ const UserController = {
         ...(password && { password }),
       };
 
-      const checkUpdate = await UserService.updateUserInfo(userId, toUpdate);
+      const checkUpdate = await UserService.updateUserInfo(_id, toUpdate);
 
       res.status(200).json({
         name: checkUpdate.name,
@@ -67,11 +69,13 @@ const UserController = {
   // 사용자 정보 삭제(회원탈퇴)
   async deleteUser(req, res, next) {
     try {
-      const userId = req.params;
-      const result = await userModel.deleteById(userId);
+      const _id = new ObjectId(req.params.id);
+      const result = await userModel.deleteById(_id);
       res.status(200).json({
         success: !!result,
         id: result.id,
+        email: result.email,
+        name: result.name,
       });
     } catch (error) {
       next(error);

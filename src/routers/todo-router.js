@@ -6,7 +6,7 @@ const todoRouter = Router();
 
 // 할 일 그룹(제목) 추가
 todoRouter.post(
-  "/todo",
+  "/todo/:id",
   todoValidator.createTitleValidator,
   TodoController.createTodo
 );

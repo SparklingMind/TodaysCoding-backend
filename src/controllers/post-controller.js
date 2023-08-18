@@ -1,4 +1,5 @@
 import { PostService } from "../services/post-service.js";
+import { ObjectId } from "mongodb";
 
 const PostController = {
   async getPost(req, res, next) {
@@ -16,21 +17,16 @@ const PostController = {
 
   async createPost(req, res, next) {
     try {
-      const { id, date, title, content } = req.body;
+      const userId = new ObjectId(req.params.id);
+      const { date, title, content } = req.body;
       const result = await PostService.addPost({
-        id,
+        userId,
         date,
         title,
         content,
       });
 
-      res.status(201).json({
-        title: result.title,
-        content: result.content,
-        userId: result.userId,
-        id: result._id,
-        createdAt: result.createdAt,
-      });
+      res.status(201).json(result);
     } catch (error) {
       next(error);
     }

@@ -8,7 +8,7 @@ const postRouter = Router();
 postRouter.get("/post", PostController.getPost);
 // 게시글 추가
 postRouter.post(
-  "/post",
+  "/post/:id",
   postValidator.createPostValidator,
   PostController.createPost
 );
