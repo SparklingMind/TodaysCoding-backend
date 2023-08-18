@@ -24,7 +24,7 @@ const PostController = {
         content,
       });
 
-      res.status(200).json({
+      res.status(201).json({
         title: result.title,
         content: result.content,
         userId: result.userId,
@@ -65,7 +65,10 @@ const PostController = {
         id: result._id,
         createdAt: result.createdAt,
       });
-    } catch {}
+    } catch (error) {
+      res.status(400).json(error);
+      // next(error);
+    }
   },
 };
 
