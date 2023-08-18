@@ -9,7 +9,7 @@ const daySchema = new Schema(
     },
     // 날짜
     date: {
-      type: Date,
+      type: String,
       required: true,
     },
     // 해당 날짜에 저장되는 이모티콘

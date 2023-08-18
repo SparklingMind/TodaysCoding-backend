@@ -9,11 +9,11 @@ const todoSchema = new Schema(
     },
     // 할 일 목록
     todos: {
-      type: [{ checked: Boolean, todo: String }],
+      type: [{ completed: Boolean, todo: String, originalIndex: Number }],
       required: false,
     },
     userId: {
-      type: Schema.Types.String,
+      type: Schema.Types.ObjectId,
       ref: "users",
       required: true,
     },
