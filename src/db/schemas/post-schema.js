@@ -13,7 +13,7 @@ const postSchema = new Schema(
       required: true,
     },
     userId: {
-      type: Schema.Types.String,
+      type: Schema.Types.ObjectId,
       ref: "users",
       required: true,
     },
