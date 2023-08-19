@@ -17,7 +17,7 @@ const PostController = {
 
   async createPost(req, res, next) {
     try {
-      const userId = new ObjectId(req.params.id);
+      const userId = new ObjectId(req.params.userId);
       const { date, title, content } = req.body;
       const result = await PostService.addPost({
         userId,
@@ -34,7 +34,9 @@ const PostController = {
 
   async updatePost(req, res, next) {
     try {
-      const id = req.params.id;
+      console.log(req.params);
+      const id = req.params.postId;
+      console.log(id);
       const { title, content } = req.body;
 
       const result = await PostService.changePost({ id, title, content });
@@ -52,7 +54,8 @@ const PostController = {
 
   async deletePost(req, res, next) {
     try {
-      const id = req.params.id;
+      console.log(req.params);
+      const id = req.params.postId;
       const result = await PostService.removePost(id);
       res.status(200).json({
         title: result.title,

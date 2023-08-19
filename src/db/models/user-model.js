@@ -31,7 +31,6 @@ class UserModel {
     const updateInfo = await User.findByIdAndUpdate(_id, toUpdate, {
       returnOriginal: false,
     });
-    console.log(updateInfo);
     return updateInfo;
   }
 }

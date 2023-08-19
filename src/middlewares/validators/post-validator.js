@@ -29,7 +29,7 @@ const postValidator = {
       content: Joi.string(),
     });
     const paramsSchema = Joi.object({
-      id: Joi.string().alphanum().required(),
+      postId: Joi.string().alphanum().required(),
     });
     try {
       await bodySchema.validateAsync(body);

@@ -20,11 +20,12 @@ const todoValidator = {
   async updateTitleValidator(req, res, next) {
     const body = req.body;
     const params = req.params;
+    console.log(body, params);
     const bodySchema = Joi.object({
       title: Joi.string().max(20),
     });
     const paramsSchema = Joi.object({
-      id: Joi.string().alphanum().required(),
+      categoryId: Joi.string().alphanum().required(),
     });
     try {
       await bodySchema.validateAsync(body);

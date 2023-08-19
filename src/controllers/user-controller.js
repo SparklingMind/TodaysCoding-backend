@@ -28,8 +28,7 @@ const UserController = {
   // 사용자 정보 조회(마이페이지)
   async getUser(req, res, next) {
     try {
-      const id = new ObjectId(req.params.id);
-      console.log(typeof id);
+      const id = new ObjectId(req.params.userId);
       const result = await userModel.findById(id);
       res.status(200).json({
         id: result.id,
@@ -44,7 +43,7 @@ const UserController = {
   // 사용자 정보 수정(마이페이지)
   async updateUser(req, res, next) {
     try {
-      const _id = new ObjectId(req.params.id);
+      const _id = new ObjectId(req.params.userId);
       const { id, email, name, password } = req.body;
 
       const toUpdate = {
@@ -69,7 +68,7 @@ const UserController = {
   // 사용자 정보 삭제(회원탈퇴)
   async deleteUser(req, res, next) {
     try {
-      const _id = new ObjectId(req.params.id);
+      const _id = new ObjectId(req.params.userId);
       const result = await userModel.deleteById(_id);
       res.status(200).json({
         success: !!result,

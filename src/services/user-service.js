@@ -44,7 +44,7 @@ const UserService = {
     const key = process.env.KEY;
     const token = jwt.sign({ id: user._id }, key);
 
-    return { token, id: user._id };
+    return { token, _id: user._id };
   },
 
   async updateUserInfo(_id, toUpdate) {

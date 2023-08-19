@@ -8,17 +8,17 @@ const postRouter = Router();
 postRouter.get("/post", PostController.getPost);
 // 게시글 추가
 postRouter.post(
-  "/post/:id",
+  "/post/:userId",
   postValidator.createPostValidator,
   PostController.createPost
 );
 // 게시글 수정
 postRouter.patch(
-  "/post/:id",
+  "/post/:postId",
   postValidator.updatePostValidator,
   PostController.updatePost
 );
 // 게시글 삭제
-postRouter.delete("/post/:id", PostController.deletePost);
+postRouter.delete("/post/:postId", PostController.deletePost);
 
 export { postRouter };

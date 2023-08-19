@@ -6,21 +6,21 @@ const todoRouter = Router();
 
 // 할 일 그룹(제목) 추가
 todoRouter.post(
-  "/todo/:id",
+  "/todo/:userId",
   todoValidator.createTitleValidator,
   TodoController.createTodo
 );
 // 할 일 제목 수정
 todoRouter.patch(
-  "/todo/:id",
+  "/todo/:categoryId",
   todoValidator.updateTitleValidator,
   TodoController.updateTodo
 );
 // 할 일 제목 삭제
-todoRouter.delete("/todo/:id", TodoController.deleteTodo);
+todoRouter.delete("/todo/:categoryId", TodoController.deleteTodo);
 // 할 일 수정
 todoRouter.patch(
-  "/todolist/:id",
+  "/todolist/:categoryId",
   todoValidator.updateTodoListValidator,
   TodoController.updateTodolist
 );

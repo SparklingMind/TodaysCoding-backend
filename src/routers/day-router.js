@@ -8,7 +8,7 @@ const dayRouter = Router();
 dayRouter.get("/day", DayController.getDayInfo);
 // 이모지 추가
 dayRouter.patch(
-  "/day/:id",
+  "/day/:userId",
   dayValidator.addEmogiValidator,
   DayController.addEmogi
 );

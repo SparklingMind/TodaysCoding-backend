@@ -13,14 +13,14 @@ userRouter.post(
 // 로그인
 userRouter.post("/login", userValidator.loginValidator, UserController.login);
 // 사용자 정보 조회
-userRouter.get("/users/:id", UserController.getUser);
+userRouter.get("/users/:userId", UserController.getUser);
 // 사용자 정보 수정
 userRouter.patch(
-  "/users/:id",
+  "/users/:userId",
   userValidator.updateUserValidator,
   UserController.updateUser
 );
 // 사용자 정보 삭제(탈퇴)
-userRouter.delete("/users/:id", UserController.deleteUser);
+userRouter.delete("/users/:userId", UserController.deleteUser);
 
 export { userRouter };

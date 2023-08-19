@@ -9,20 +9,17 @@ const DayController = {
 
   async addEmogi(req, res, next) {
     try {
-      const { id } = req.params;
+      const { userId } = req.params;
       const { date, emogi } = req.body;
 
-      const result = await DayService.updateEmogi(
-        { userId: id, date },
-        { emogi }
-      );
+      const result = await DayService.updateEmogi({ userId, date }, { emogi });
 
       res.status(201).json({
         date: result.date,
         emogi: result.emogi,
       });
     } catch (error) {
-      res.status(400).json(error.message);
+      next(error);
     }
   },
 };
