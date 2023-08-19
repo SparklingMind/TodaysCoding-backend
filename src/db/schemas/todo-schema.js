@@ -1,19 +1,19 @@
 import { Schema } from "mongoose";
 
-const postSchema = new Schema(
+const todoSchema = new Schema(
   {
-    // post 제목
+    // todo 제목
     title: {
       type: String,
       required: true,
     },
-    // post 내용
-    content: {
-      type: String,
-      required: true,
+    // 할 일 목록
+    todos: {
+      type: [{ completed: Boolean, todo: String, originalIndex: Number }],
+      required: false,
     },
     userId: {
-      type: Schema.Types.String,
+      type: Schema.Types.ObjectId,
       ref: "users",
       required: true,
     },
@@ -24,9 +24,9 @@ const postSchema = new Schema(
     },
   },
   {
-    collection: "posts",
+    collection: "todos",
     timestamps: true,
   }
 );
 
-export { postSchema };
+export { todoSchema };

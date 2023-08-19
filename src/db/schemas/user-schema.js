@@ -7,6 +7,12 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    // 유저 ID
+    id: {
+      type: String,
+      unique: true,
+      required: true,
+    },
     // 유저 이메일
     email: {
       type: String,
@@ -26,11 +32,6 @@ const userSchema = new Schema(
     isAdmin: {
       type: Boolean,
       default: false,
-    },
-    // 로컬 Date 저장
-    date: {
-      type: String,
-      required: false,
     },
   },
   {
