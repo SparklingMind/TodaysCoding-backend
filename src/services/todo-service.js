@@ -19,6 +19,12 @@ const TodoService = {
     return result;
   },
 
+  async findTodoByUserIdAndDate(info) {
+    const { userId, dateId } = info;
+    const posts = await todoModel.find({ userId, dateId });
+    return posts;
+  },
+
   async changeTitle(info) {
     const { id, title } = info;
 

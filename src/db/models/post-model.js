@@ -9,6 +9,12 @@ class PostModel {
     return result;
   }
 
+  async findById(id) {
+    const result = await Post.findById(id);
+    console.log(result);
+    return result;
+  }
+
   async create(info) {
     const result = await Post.create(info);
     return result;

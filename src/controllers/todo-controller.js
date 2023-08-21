@@ -1,13 +1,23 @@
 import { TodoService } from "../services/todo-service.js";
 import { todoModel } from "../db/models/todo-model.js";
+import { dayModel } from "../db/models/day-model.js";
 import { ObjectId } from "mongodb";
 
 const TodoController = {
-  // 할일 아이디별로 초회
+  // 할일 아이디와 날짜 별로 초회
   async getTodo(req, res, next) {
     try {
       const { userId } = req.params;
-      const result = await todoModel.findbyUserId(userId);
+      const { date } = req.query;
+
+      const day = await dayModel.findOrCreateDay({ userId, date });
+      const dateId = day._id;
+
+      const result = await TodoService.findTodoByUserIdAndDate({
+        userId,
+        dateId,
+      });
+
       res.status(200).json(result);
     } catch (error) {
       res.json({ errorMessage: error.message });

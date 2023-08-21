@@ -4,8 +4,10 @@ import { postValidator } from "../middlewares/validators/post-validator.js";
 
 const postRouter = Router();
 
-// 게시글 전체 조회
-postRouter.get("/post", PostController.getPost);
+// 한 회원의 게시글 전체 조회
+postRouter.get("/posts/:userId", PostController.getPosts);
+// 게시글 개별 전체 조회
+postRouter.get("/post/:postId", PostController.getAPost);
 // 게시글 추가
 postRouter.post(
   "/post/:userId",

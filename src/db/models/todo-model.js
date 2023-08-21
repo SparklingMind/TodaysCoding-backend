@@ -4,10 +4,11 @@ import { todoSchema } from "../schemas/todo-schema.js";
 const Todo = model("todos", todoSchema);
 
 class TodoModel {
-  async findbyUserId(userId) {
-    const result = await Todo.find({ userId });
+  async find(info) {
+    const result = await Todo.find(info);
     return result;
   }
+
   async create(todoInfo) {
     const result = await Todo.create(todoInfo);
     return result;
