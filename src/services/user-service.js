@@ -31,14 +31,14 @@ const UserService = {
     const user = await userModel.findByUserId({ id });
 
     if (!user) {
-      throw new Error("아이디 확인 필요");
+      throw new Error("check id");
     }
 
     const hashedPassword = user.password;
     const checkPassword = await bcrypt.compare(password, hashedPassword);
 
     if (!checkPassword) {
-      throw new Error("비밀번호 확인 필요");
+      throw new Error("check password");
     }
 
     const key = process.env.KEY;

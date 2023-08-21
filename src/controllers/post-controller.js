@@ -9,9 +9,12 @@ const PostController = {
         id,
         date,
       });
+
+      if (!result) res.status(400);
+
       res.status(200).json(result);
     } catch (error) {
-      next(error);
+      res.json({ errorMessage: error.message });
     }
   },
 
@@ -28,7 +31,7 @@ const PostController = {
 
       res.status(201).json(result);
     } catch (error) {
-      next(error);
+      res.json({ errorMessage: error.message });
     }
   },
 
@@ -48,7 +51,7 @@ const PostController = {
         createdAt: result.createdAt,
       });
     } catch (error) {
-      next(error);
+      res.json({ errorMessage: error.message });
     }
   },
 
@@ -56,17 +59,11 @@ const PostController = {
     try {
       console.log(req.params);
       const id = req.params.postId;
-      const result = await PostService.removePost(id);
-      res.status(200).json({
-        title: result.title,
-        content: result.content,
-        userId: result.userId,
-        id: result._id,
-        createdAt: result.createdAt,
-      });
+      await PostService.removePost(id);
+
+      res.status(204);
     } catch (error) {
-      res.status(400).json(error);
-      // next(error);
+      res.json({ errorMessage: error.message });
     }
   },
 };

@@ -16,21 +16,21 @@ const TodoController = {
 
       res.status(201).json(result);
     } catch (error) {
-      next(error);
+      res.json({ errorMessage: error.message });
     }
   },
 
   // 할 일 제목 수정
   async updateTodo(req, res, next) {
     try {
-      const id = req.params.categoryId;
+      const { id } = req.params;
       const title = req.body.title;
 
       const result = await TodoService.changeTitle({ id, title });
 
       res.status(200).json(result);
     } catch (error) {
-      next(error);
+      res.json({ errorMessage: error.message });
     }
   },
 
@@ -42,7 +42,7 @@ const TodoController = {
 
       res.status(200).json(result);
     } catch (error) {
-      next(error);
+      res.json({ errorMessage: error.message });
     }
   },
 
@@ -51,10 +51,10 @@ const TodoController = {
     try {
       const id = req.params.categoryId;
       const todos = req.body;
-      const result = await todoModel.addTodoList(id, { todos });
+      const result = await todoModel.addTodoList(id, [...todos]);
       res.status(200).json(result);
     } catch (error) {
-      next(error);
+      res.json({ errorMessage: error.message });
     }
   },
 };

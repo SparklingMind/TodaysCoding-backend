@@ -12,7 +12,9 @@ const todoValidator = {
     try {
       await schema.validateAsync(body);
     } catch (error) {
-      res.status(400).json({ code: 400, errorMessage: error.message });
+      res
+        .status(400)
+        .json({ code: "Bad Request", errorMessage: error.message });
     }
     next();
   },
@@ -31,7 +33,9 @@ const todoValidator = {
       await bodySchema.validateAsync(body);
       await paramsSchema.validateAsync(params);
     } catch (error) {
-      res.status(400).json({ code: 400, errorMessage: error.message });
+      res
+        .status(400)
+        .json({ code: "Bad Request", errorMessage: error.message });
     }
     next();
   },
@@ -48,7 +52,9 @@ const todoValidator = {
     try {
       await schema.validateAsync(body);
     } catch (error) {
-      res.status(400).json({ code: 400, errorMessage: error.message });
+      res
+        .status(400)
+        .json({ code: "Bad Request", errorMessage: error.message });
     }
     next();
   },

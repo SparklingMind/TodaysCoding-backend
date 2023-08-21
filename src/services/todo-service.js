@@ -6,7 +6,7 @@ const TodoService = {
   async addTodo(info) {
     const { id, date, title } = info;
 
-    const day = await dayModel.find({ userId: id, date });
+    const day = await dayModel.findOrCreateDay({ userId: id, date });
     const user = await userModel.findById(id);
     const userId = user._id;
     const dateId = day._id;

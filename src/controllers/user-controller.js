@@ -10,7 +10,7 @@ const UserController = {
       const result = await UserService.addUser({ name, id, email, password });
       res.status(201).json(result);
     } catch (error) {
-      next(error);
+      res.json({ errorMessage: error.message });
     }
   },
 
@@ -21,7 +21,8 @@ const UserController = {
       const result = await UserService.checkUser({ id, password });
       res.status(201).json(result);
     } catch (error) {
-      next(error);
+      console.log(error);
+      res.json({ errorMessage: error.message });
     }
   },
 
@@ -36,7 +37,7 @@ const UserController = {
         name: result.name,
       });
     } catch (error) {
-      next(error);
+      res.json({ errorMessage: error.message });
     }
   },
 
@@ -61,7 +62,7 @@ const UserController = {
         email: checkUpdate.email,
       });
     } catch (error) {
-      next(error);
+      res.json({ errorMessage: error.message });
     }
   },
 
@@ -77,7 +78,7 @@ const UserController = {
         name: result.name,
       });
     } catch (error) {
-      next(error);
+      res.json({ errorMessage: error.message });
     }
   },
 };

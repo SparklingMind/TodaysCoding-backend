@@ -10,8 +10,6 @@ const PostService = {
       const userId = info.id;
       const posts = postModel.find({ userId, dateId });
       return posts;
-    } else {
-      return { error: "no posts" };
     }
   },
 

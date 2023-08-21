@@ -14,12 +14,14 @@ const DayController = {
 
       const result = await DayService.updateEmogi({ userId, date }, { emogi });
 
+      if (!result) res.status(400).json({ errorMessage: error.message });
+
       res.status(201).json({
         date: result.date,
         emogi: result.emogi,
       });
     } catch (error) {
-      next(error);
+      res.json({ errorMessage: error.message });
     }
   },
 };
