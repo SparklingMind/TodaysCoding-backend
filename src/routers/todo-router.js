@@ -4,6 +4,9 @@ import { todoValidator } from "../middlewares/validators/todo-validator.js";
 
 const todoRouter = Router();
 
+// 해당 아이디가 만든 todo들 모두 조회
+todoRouter.get("/todo/:userId", TodoController.getTodo);
+
 // 할 일 그룹(제목) 추가
 todoRouter.post(
   "/todo/:userId",

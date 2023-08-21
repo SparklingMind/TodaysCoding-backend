@@ -3,6 +3,17 @@ import { todoModel } from "../db/models/todo-model.js";
 import { ObjectId } from "mongodb";
 
 const TodoController = {
+  // 할일 아이디별로 초회
+  async getTodo(req, res, next) {
+    try {
+      const { userId } = req.params;
+      const result = await todoModel.findbyUserId(userId);
+      res.status(200).json(result);
+    } catch (error) {
+      res.json({ errorMessage: error.message });
+    }
+  },
+
   // 할일 그룹(제목) 추가
   async createTodo(req, res, next) {
     try {

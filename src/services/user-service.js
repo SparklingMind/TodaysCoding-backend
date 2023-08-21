@@ -25,6 +25,8 @@ const UserService = {
     };
   },
 
+  
+
   async checkUser(userInfo) {
     const { id, password } = userInfo;
 

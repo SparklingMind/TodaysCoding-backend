@@ -14,6 +14,23 @@ const UserController = {
     }
   },
 
+  // 회원가입 아이디 중복 확인
+  async checkDuplicationOfId(req, res, next) {
+    try {
+      const { loginId } = req.params;
+      const result = await userModel.findByUserId({ id: loginId });
+
+      res
+        .status(200)
+        .json(
+          !result
+            ? { message: "사용할 수 있는 아이디입니다." }
+            : { message: "다른 아이디를 사용해주세요." }
+        );
+    } catch (error) {
+      res.json({ errorMessage: error.message });
+    }
+  },
   // 로그인(아이디, 비밀번호 확인)
   async login(req, res, next) {
     try {
