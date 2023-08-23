@@ -26,15 +26,15 @@ const TodoController = {
     }
   },
 
-  // 할일 그룹(제목) 추가
+  // 할일 그룹(이름) 추가
   async createTodo(req, res, next) {
     try {
-      const id = new ObjectId(req.params.userId);
-      const { date, title } = req.body;
+      const userId = new ObjectId(req.params.userId);
+      const { date, name } = req.body;
       const result = await TodoService.addTodo({
-        id,
+        userId,
         date,
-        title,
+        name,
       });
 
       res.status(201).json(result);
@@ -43,13 +43,19 @@ const TodoController = {
     }
   },
 
-  // 할 일 제목 수정
+  // 할 일 이름 수정
   async updateTodo(req, res, next) {
     try {
-      const { id } = req.params;
-      const title = req.body.title;
+      const id = req.params.categoryId;
+      const name = req.body.name;
 
-      const result = await TodoService.changeTitle({ id, title });
+      const result = await TodoService.changeName({ id, name });
+
+      if (result === null) {
+        return res
+          .status(400)
+          .json({ message: "해당 todo 목록이 더 이상 존재하지 않습니다." });
+      }
 
       res.status(200).json(result);
     } catch (error) {
@@ -57,13 +63,19 @@ const TodoController = {
     }
   },
 
-  // 할 일 제목 삭제
+  // 할 일 이름 삭제
   async deleteTodo(req, res, next) {
     try {
       const id = req.params.categoryId;
       const result = await TodoService.removeTodo(id);
 
-      res.status(200).json(result);
+      if (result === null) {
+        return res
+          .status(400)
+          .json({ message: "해당 todo 목록이 더 이상 존재하지 않습니다." });
+      }
+
+      res.status(204).json(result);
     } catch (error) {
       res.json({ errorMessage: error.message });
     }
@@ -74,7 +86,15 @@ const TodoController = {
     try {
       const id = req.params.categoryId;
       const todos = req.body;
+      console.log([...todos]);
       const result = await todoModel.addTodoList(id, [...todos]);
+
+      if (result === null) {
+        return res
+          .status(400)
+          .json({ message: "해당 todo 목록이 더 이상 존재하지 않습니다." });
+      }
+
       res.status(200).json(result);
     } catch (error) {
       res.json({ errorMessage: error.message });

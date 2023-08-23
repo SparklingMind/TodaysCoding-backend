@@ -4,17 +4,15 @@ import { userModel } from "../db/models/user-model.js";
 
 const TodoService = {
   async addTodo(info) {
-    const { id, date, title } = info;
+    const { userId, date, name } = info;
 
-    const day = await dayModel.findOrCreateDay({ userId: id, date });
-    const user = await userModel.findById(id);
-    const userId = user._id;
+    const day = await dayModel.findOrCreateDay({ userId, date });
     const dateId = day._id;
 
     const result = await todoModel.create({
       userId,
       dateId,
-      title,
+      name,
     });
     return result;
   },
@@ -25,10 +23,10 @@ const TodoService = {
     return posts;
   },
 
-  async changeTitle(info) {
-    const { id, title } = info;
+  async changeName(info) {
+    const { id, name } = info;
 
-    const result = await todoModel.updateTitle(info);
+    const result = await todoModel.updateName(info);
     return result;
   },
 

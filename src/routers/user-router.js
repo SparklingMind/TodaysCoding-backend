@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { UserController } from "../controllers/user-controller.js";
 import { userValidator } from "../middlewares/validators/user-validator.js";
+import { tokenMiddleware } from "../middlewares/token-middleware.js";
 
 const userRouter = Router();
 
@@ -22,14 +23,15 @@ userRouter.post(
   UserController.login
 );
 // 사용자 정보 조회
-userRouter.get("/users/:userId", UserController.getUser);
+userRouter.get("/users", tokenMiddleware, UserController.getUser);
 // 사용자 정보 수정
 userRouter.patch(
-  "/users/:userId",
+  "/users",
   userValidator.updateUserValidator,
+  tokenMiddleware,
   UserController.updateUser
 );
 // 사용자 정보 삭제(탈퇴)
-userRouter.delete("/users/:userId", UserController.deleteUser);
+userRouter.delete("/users", tokenMiddleware, UserController.deleteUser);
 
 export { userRouter };

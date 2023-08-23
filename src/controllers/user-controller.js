@@ -38,7 +38,6 @@ const UserController = {
       const result = await UserService.giveToken({ id, password });
       res.status(201).json(result);
     } catch (error) {
-      console.log(error);
       res.json({ errorMessage: error.message });
     }
   },

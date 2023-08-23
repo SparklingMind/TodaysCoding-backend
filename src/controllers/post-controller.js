@@ -17,6 +17,12 @@ const PostController = {
         dateId,
       });
 
+      if (result === null) {
+        return res
+          .status(400)
+          .json({ message: "해당 글은 더 이상 존재하지 않습니다." });
+      }
+
       if (!result) res.status(400);
 
       res.status(200).json(result);
@@ -29,7 +35,11 @@ const PostController = {
       const { postId } = req.params;
       const result = await postModel.findById(postId);
 
-      if (!result) res.status(400);
+      if (result === null) {
+        return res
+          .status(400)
+          .json({ message: "해당 글은 더 이상 존재하지 않습니다." });
+      }
 
       res.status(200).json(result);
     } catch (error) {
@@ -59,6 +69,13 @@ const PostController = {
       const { title, content } = req.body;
 
       const result = await PostService.changePost({ id, title, content });
+
+      if (result === null) {
+        return res
+          .status(400)
+          .json({ message: "해당 글은 더 이상 존재하지 않습니다." });
+      }
+
       res.status(200).json({
         title: result.title,
         content: result.content,
@@ -74,11 +91,17 @@ const PostController = {
   async deletePost(req, res, next) {
     try {
       const id = req.params.postId;
-      await PostService.removePost(id);
+      const result = await PostService.removePost(id);
 
-      res.status(204);
+      if (result === null) {
+        return res
+          .status(400)
+          .json({ message: "해당 글은 더 이상 존재하지 않습니다." });
+      }
+
+      res.status(204).json(result);
     } catch (error) {
-      res.json({ errorMessage: error.message });
+      res.status(400).json({ errorMessage: error.message });
     }
   },
 };

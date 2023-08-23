@@ -9,12 +9,12 @@ const userValidator = {
     });
     try {
       await schema.validateAsync(body);
+      next();
     } catch (error) {
       res
         .status(400)
         .json({ code: "Bad Request", errorMessage: error.message });
     }
-    next();
   },
 
   async registerValidator(req, res, next) {
@@ -27,12 +27,12 @@ const userValidator = {
     });
     try {
       await schema.validateAsync(body);
+      next();
     } catch (error) {
       res
         .status(400)
         .json({ code: "Bad Request", errorMessage: error.message });
     }
-    next();
   },
 
   async updateUserValidator(req, res, next) {
@@ -44,12 +44,12 @@ const userValidator = {
     });
     try {
       await schema.validateAsync(body);
+      next();
     } catch (error) {
       res
         .status(400)
         .json({ code: "Bad Request", errorMessage: error.message });
     }
-    next();
   },
 };
 

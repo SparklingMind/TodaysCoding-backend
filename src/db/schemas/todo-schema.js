@@ -2,14 +2,14 @@ import { Schema } from "mongoose";
 
 const todoSchema = new Schema(
   {
-    // todo 제목
-    title: {
+    // todo 이름
+    name: {
       type: String,
       required: true,
     },
     // 할 일 목록
     todos: {
-      type: [{ completed: Boolean, todo: String, originalIndex: Number }],
+      type: [{ completed: Boolean, text: String, originalIndex: Number }],
       required: false,
     },
     userId: {

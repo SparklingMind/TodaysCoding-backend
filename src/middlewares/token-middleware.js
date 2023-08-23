@@ -7,7 +7,7 @@ import {
   issueToken,
 } from "../modules/token-modules.js";
 
-const tokenMiddleware = async (req, res, next) => {
+const refreshTokenMiddleware = async (req, res, next) => {
   const { authorization, refreshtoken } = req.headers;
   const { userId } = req.params;
 
@@ -15,7 +15,6 @@ const tokenMiddleware = async (req, res, next) => {
   const refreshToken = refreshtoken;
 
   const accessTokenValid = await checkAccessToken(accessToken);
-  console.log(accessTokenValid);
 
   if (accessTokenValid.ok) {
     next();
@@ -37,8 +36,6 @@ const tokenMiddleware = async (req, res, next) => {
     const newAccessToken = tokens.accessToken;
     const newRefreshToken = tokens.refreshToken;
 
-    console.log(tokens);
-
     // refresh 토큰 업데이트
     await tokenModel.updateToken({
       _id: userId,
@@ -47,6 +44,26 @@ const tokenMiddleware = async (req, res, next) => {
 
     // res.status(201).json({ accessToken: newAccessToken });
     next();
+  }
+};
+
+const tokenMiddleware = async (req, res, next) => {
+  try {
+    const { authorization } = req.headers;
+    const accessToken = authorization.split(" ")[1];
+
+    const accessTokenValid = await checkAccessToken(accessToken);
+
+    if (accessTokenValid.ok && Object.keys(req.params).length === 0) {
+      req.params = { userId: accessTokenValid.userId };
+      next();
+    } else if (accessTokenValid.ok) {
+      next();
+    } else {
+      return res.status(400).json({ message: "access token is denied" });
+    }
+  } catch (error) {
+    return res.status(400).json({ message: "access token is denied" });
   }
 };
 

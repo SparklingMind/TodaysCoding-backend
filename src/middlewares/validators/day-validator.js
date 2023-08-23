@@ -14,7 +14,7 @@ const dayValidator = {
       await schema.validateAsync(body);
       next();
     } catch (error) {
-      return res
+      res
         .status(400)
         .json({ code: "Bad Request", errorMessage: error.message });
     }

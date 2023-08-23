@@ -15,11 +15,11 @@ class TodoModel {
     return result;
   }
 
-  async updateTitle(titleInfo) {
-    const { id, title } = titleInfo;
+  async updateName(nameInfo) {
+    const { id, name } = nameInfo;
     const result = await Todo.findByIdAndUpdate(
       id,
-      { title },
+      { name },
       { returnOriginal: false }
     );
     return result;
@@ -31,9 +31,13 @@ class TodoModel {
   }
 
   async addTodoList(id, todos) {
-    const result = await Todo.findByIdAndUpdate(id, todos, {
-      returnOriginal: false,
-    });
+    const result = await Todo.findByIdAndUpdate(
+      id,
+      { todos },
+      {
+        returnOriginal: false,
+      }
+    );
     return result;
   }
 }
