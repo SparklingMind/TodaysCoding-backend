@@ -1,7 +1,9 @@
 import { userModel } from "../db/models/user-model.js";
+import { tokenModel } from "../db/models/token-model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
+import { issueToken } from "../modules/token-modules.js";
 
 const UserService = {
   // 비밀번호만 암호화하여 DB에 회원 추가
@@ -25,9 +27,7 @@ const UserService = {
     };
   },
 
-  
-
-  async checkUser(userInfo) {
+  async giveToken(userInfo) {
     const { id, password } = userInfo;
 
     const user = await userModel.findByUserId({ id });
@@ -43,10 +43,22 @@ const UserService = {
       throw new Error("check password");
     }
 
-    const key = process.env.KEY;
-    const token = jwt.sign({ id: user._id }, key);
+    // token 생성
+    const _id = user._id;
+    const { accessToken, refreshToken } = await issueToken(_id);
 
-    return { token, _id: user._id };
+    // refreshToken DB에 저장
+    const tokenData = await tokenModel.findById(_id);
+
+    if (!tokenData) {
+      await tokenModel.createToken({
+        id: _id,
+        refreshToken,
+      });
+    }
+    const result = await tokenModel.updateToken({ _id, refreshToken });
+
+    return { accessToken, refreshToken, _id, result };
   },
 
   async updateUserInfo(_id, toUpdate) {

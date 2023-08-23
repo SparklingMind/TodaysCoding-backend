@@ -16,6 +16,7 @@ class DayModel {
   }
 
   async findOrCreateDay(info) {
+    const { userId, date } = info;
     const result = await Day.findOne(info);
     if (!result) {
       const newDay = await Day.create(info);
