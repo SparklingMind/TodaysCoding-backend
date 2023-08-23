@@ -28,7 +28,7 @@ const DayController = {
         todos,
       });
     } catch (error) {
-      res.json({ errorMessage: error.message });
+      return res.json({ errorMessage: error.message });
     }
   },
 
@@ -39,14 +39,17 @@ const DayController = {
 
       const result = await DayService.updateEmogi({ userId, date }, { emogi });
 
-      if (!result) res.status(400).json({ errorMessage: error.message });
+      if (!result) {
+        res.status(400).json({ errorMessage: error.message });
+        return;
+      }
 
-      res.status(201).json({
+      return res.status(201).json({
         date: result.date,
         emogi: result.emogi,
       });
     } catch (error) {
-      res.json({ errorMessage: error.message });
+      return res.json({ errorMessage: error.message });
     }
   },
 };
