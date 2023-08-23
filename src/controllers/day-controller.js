@@ -49,7 +49,7 @@ const DayController = {
         emogi: result.emogi,
       });
     } catch (error) {
-      return res.status(400).json({ errorMessage: error.message });
+      res.status(400).json({});
     }
   },
 };
