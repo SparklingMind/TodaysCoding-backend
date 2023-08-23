@@ -35,7 +35,7 @@ const UserController = {
   async login(req, res, next) {
     try {
       const { id, password } = req.body;
-      const result = await UserService.checkUser({ id, password });
+      const result = await UserService.giveToken({ id, password });
       res.status(201).json(result);
     } catch (error) {
       console.log(error);
