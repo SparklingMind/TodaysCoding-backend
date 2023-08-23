@@ -12,12 +12,12 @@ const dayValidator = {
     });
     try {
       await schema.validateAsync(body);
+      next();
     } catch (error) {
-      res
+      return res
         .status(400)
         .json({ code: "Bad Request", errorMessage: error.message });
     }
-    next();
   },
 };
 
