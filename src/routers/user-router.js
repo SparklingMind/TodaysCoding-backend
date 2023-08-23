@@ -17,7 +17,7 @@ userRouter.post(
 );
 // 로그인
 userRouter.post(
-  "auth/login",
+  "/auth/login",
   userValidator.loginValidator,
   UserController.login
 );
