@@ -33,6 +33,12 @@ class DayModel {
     }
     return result;
   }
+
+  async findAllDay(userId) {
+    const result = await Day.find(userId);
+
+    return result;
+  }
 }
 
 const dayModel = new DayModel();

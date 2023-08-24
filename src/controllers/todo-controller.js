@@ -3,6 +3,7 @@ import { todoModel } from "../db/models/todo-model.js";
 import { dayModel } from "../db/models/day-model.js";
 import { ObjectId } from "mongodb";
 import cron from "node-cron";
+import { deliverTodo } from "../modules/todo-modules.js";
 import moment from "moment";
 
 const TodoController = {
@@ -102,33 +103,13 @@ const TodoController = {
   },
 };
 
-async function getDateId() {
-  const userId = `64dc7b9760546cac850f720b`;
-  const today = moment().format("YYYYMMDD");
-  const yesterday = moment().subtract(1, "d").format("YYYYMMDD");
-
-  const todayData = await dayModel.findOrCreateDay({ userId, date: today });
-  const yesterdayData = await dayModel.findOrCreateDay({
-    userId,
-    date: yesterday,
-  });
-
-  const todayId = todayData._id;
-  const yesterdayId = yesterdayData._id;
-
-  const yesterdayTodo = todoModel.console.log();
-  console.log(todayId);
-  console.log(yesterdayId);
-  console.log();
-}
-
-const task = cron.schedule(
-  "* * * * * *",
-  function () {
-    getDateId();
-  },
-  { scheduled: false }
-);
+// const task = cron.schedule(
+//   "*/2 * * * * *",
+//   function () {
+//     deliverTodo();
+//   },
+//   { scheduled: false }
+// );
 
 // task.start();
 
