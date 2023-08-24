@@ -48,17 +48,17 @@ const UserService = {
     const { accessToken, refreshToken } = await issueToken(_id);
 
     // refreshToken DB에 저장
-    const tokenData = await tokenModel.findById(_id);
+    // const tokenData = await tokenModel.findById(_id);
 
-    if (!tokenData) {
-      await tokenModel.createToken({
-        id: _id,
-        refreshToken,
-      });
-    }
-    const result = await tokenModel.updateToken({ _id, refreshToken });
+    // if (!tokenData) {
+    //   await tokenModel.createToken({
+    //     id: _id,
+    //     refreshToken,
+    //   });
+    // }
+    // const result = await tokenModel.updateToken({ _id, refreshToken });
 
-    return { accessToken, refreshToken, _id, result };
+    return { accessToken };
   },
 
   async updateUserInfo(_id, toUpdate) {

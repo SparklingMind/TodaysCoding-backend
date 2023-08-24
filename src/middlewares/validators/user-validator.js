@@ -22,7 +22,7 @@ const userValidator = {
     const schema = Joi.object({
       email: Joi.string().email().required(),
       id: Joi.string().alphanum().min(3).max(30).required(),
-      name: Joi.string().alphanum().min(3).max(30).required(),
+      name: Joi.string().min(2).max(30),
       password: Joi.string().required(),
     });
     try {
@@ -40,7 +40,7 @@ const userValidator = {
     const schema = Joi.object({
       email: Joi.string().email(),
       id: Joi.string().alphanum().min(3).max(30),
-      name: Joi.string().alphanum().min(3).max(30),
+      name: Joi.string().min(2).max(30),
     });
     try {
       await schema.validateAsync(body);

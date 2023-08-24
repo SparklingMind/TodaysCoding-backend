@@ -41,7 +41,7 @@ const checkRefreshToken = async (id, refreshToken) => {
 
 const issueToken = async (userId) => {
   const key = process.env.KEY;
-  const accessToken = jwt.sign({ userId }, key, { expiresIn: "1h" });
+  const accessToken = jwt.sign({ userId }, key, { expiresIn: "90d" });
   const refreshToken = jwt.sign({}, key, { expiresIn: "14d" });
 
   return { accessToken, refreshToken };

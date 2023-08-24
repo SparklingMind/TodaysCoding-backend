@@ -87,12 +87,7 @@ const UserController = {
     try {
       const _id = new ObjectId(req.params.userId);
       const result = await userModel.deleteById(_id);
-      res.status(200).json({
-        success: !!result,
-        id: result.id,
-        email: result.email,
-        name: result.name,
-      });
+      res.status(204).json(result);
     } catch (error) {
       res.json({ errorMessage: error.message });
     }
