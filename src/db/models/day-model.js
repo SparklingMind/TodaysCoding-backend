@@ -7,20 +7,36 @@ class DayModel {
   // 각 날짜에 이모지를 추가하거나 날짜가 없으면 날짜 데이터 생성 후 이모지 추가
   async updateEmogiOrCreateDay(userInfo, emogi) {
     const day = await Day.findOne(userInfo);
-    if (!day) {
+    if (day === null) {
       const newDay = await Day.create({ ...userInfo, ...emogi });
-      return newDay;
+      const result = await Day.findByIdAndUpdate(newDay._id, emogi);
+      return result;
+    } else {
+      const result = await Day.findByIdAndUpdate(day._id, emogi);
+      return result;
     }
-    const result = await Day.findByIdAndUpdate(day._id, emogi);
-    return result;
+
+    // let day = await Day.findOne(userInfo);
+    // if (day === null) {
+    //   day = await Day.create({ ...userInfo, ...emogi });
+    // }
+    // const result = await Day.findByIdAndUpdate(day._id, emogi);
+    // return result;
   }
 
-  async find(info) {
+  async findOrCreateDay(info) {
+    const { userId, date } = info;
     const result = await Day.findOne(info);
     if (!result) {
       const newDay = await Day.create(info);
       return newDay;
     }
+    return result;
+  }
+
+  async findAllDay(userId) {
+    const result = await Day.find(userId);
+
     return result;
   }
 }

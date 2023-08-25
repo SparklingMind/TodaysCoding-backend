@@ -3,21 +3,14 @@ import { dayModel } from "../db/models/day-model.js";
 
 const PostService = {
   async findPostsByIdAndDate(info) {
-    const day = await dayModel.find(info);
-
-    if (day.length > 0) {
-      const dateId = day._id;
-      const userId = info.id;
-      const posts = postModel.find({ userId, dateId });
-      return posts;
-    } else {
-      return { error: "no posts" };
-    }
+    const { userId, dateId } = info;
+    const posts = await postModel.find({ userId, dateId });
+    return posts;
   },
 
   async addPost(info) {
     const { userId, date, title, content } = info;
-    const day = await dayModel.find({ userId, date });
+    const day = await dayModel.findOrCreateDay({ userId, date });
     const dateId = day._id;
 
     const result = await postModel.create({

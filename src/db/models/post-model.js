@@ -9,16 +9,21 @@ class PostModel {
     return result;
   }
 
+  async findById(id) {
+    const result = await Post.findById(id);
+    return result;
+  }
+
   async create(info) {
     const result = await Post.create(info);
     return result;
   }
 
   async findAndUpdatePost(info) {
-    const { id, title, content } = info;
+    const { id, name, content } = info;
     const result = await Post.findByIdAndUpdate(
       id,
-      { title, content },
+      { name, content },
       { returnOriginal: false }
     );
     return result;

@@ -1,20 +1,51 @@
+import { postModel } from "../db/models/post-model.js";
+import { dayModel } from "../db/models/day-model.js";
 import { PostService } from "../services/post-service.js";
 import { ObjectId } from "mongodb";
 
 const PostController = {
-  async getPost(req, res, next) {
+  async getPosts(req, res, next) {
     try {
-      const { id, date } = req.body;
+      const { userId } = req.params;
+      const { date } = req.query;
+
+      const day = await dayModel.findOrCreateDay({ userId, date });
+      const dateId = day._id;
+
       const result = await PostService.findPostsByIdAndDate({
-        id,
-        date,
+        userId,
+        dateId,
       });
+
+      if (result === null) {
+        return res
+          .status(400)
+          .json({ message: "해당 글은 더 이상 존재하지 않습니다." });
+      }
+
+      if (!result) res.status(400);
+
       res.status(200).json(result);
     } catch (error) {
-      next(error);
+      res.json({ errorMessage: error.message });
     }
   },
+  async getAPost(req, res, next) {
+    try {
+      const { postId } = req.params;
+      const result = await postModel.findById(postId);
 
+      if (result === null) {
+        return res
+          .status(400)
+          .json({ message: "해당 글은 더 이상 존재하지 않습니다." });
+      }
+
+      res.status(200).json(result);
+    } catch (error) {
+      res.json({ errorMessage: error.message });
+    }
+  },
   async createPost(req, res, next) {
     try {
       const userId = new ObjectId(req.params.userId);
@@ -28,18 +59,23 @@ const PostController = {
 
       res.status(201).json(result);
     } catch (error) {
-      next(error);
+      res.json({ errorMessage: error.message });
     }
   },
 
   async updatePost(req, res, next) {
     try {
-      console.log(req.params);
       const id = req.params.postId;
-      console.log(id);
       const { title, content } = req.body;
 
       const result = await PostService.changePost({ id, title, content });
+
+      if (result === null) {
+        return res
+          .status(400)
+          .json({ message: "해당 글은 더 이상 존재하지 않습니다." });
+      }
+
       res.status(200).json({
         title: result.title,
         content: result.content,
@@ -48,25 +84,24 @@ const PostController = {
         createdAt: result.createdAt,
       });
     } catch (error) {
-      next(error);
+      res.json({ errorMessage: error.message });
     }
   },
 
   async deletePost(req, res, next) {
     try {
-      console.log(req.params);
       const id = req.params.postId;
       const result = await PostService.removePost(id);
-      res.status(200).json({
-        title: result.title,
-        content: result.content,
-        userId: result.userId,
-        id: result._id,
-        createdAt: result.createdAt,
-      });
+
+      if (result === null) {
+        return res
+          .status(400)
+          .json({ message: "해당 글은 더 이상 존재하지 않습니다." });
+      }
+
+      res.status(204).json(result);
     } catch (error) {
-      res.status(400).json(error);
-      // next(error);
+      res.status(400).json({ errorMessage: error.message });
     }
   },
 };
