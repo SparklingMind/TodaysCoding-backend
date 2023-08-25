@@ -54,14 +54,22 @@ const tokenMiddleware = async (req, res, next) => {
 
     const accessTokenValid = await checkAccessToken(accessToken);
 
-    if (accessTokenValid.ok && Object.keys(req.params).length === 0) {
-      req.params = { userId: accessTokenValid.userId };
-      next();
-    } else if (accessTokenValid.ok) {
-      next();
-    } else {
+    if (!accessTokenValid.ok) {
       return res.status(400).json({ message: "access token is denied" });
     }
+
+    req.params = { ...req.params, userId: accessTokenValid.userId };
+    next();
+
+    // 위에 있는 코드로 변경
+    // if (accessTokenValid.ok && Object.keys(req.params).length === 0) {
+    //   req.params = { userId: accessTokenValid.userId };
+    //   next();
+    // } else if (accessTokenValid.ok) {
+    //   next();
+    // } else {
+    //   return res.status(400).json({ message: "access token is denied" });
+    // }
   } catch (error) {
     return res.status(400).json({ message: "access token is denied" });
   }

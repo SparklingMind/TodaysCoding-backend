@@ -1,5 +1,13 @@
 import { Schema } from "mongoose";
 
+const categoryNameSchema = new Schema({
+  name: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+});
+
 const userSchema = new Schema(
   {
     // 유저 이름
@@ -33,6 +41,7 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    categoryName: [categoryNameSchema],
   },
   {
     collection: "users",
