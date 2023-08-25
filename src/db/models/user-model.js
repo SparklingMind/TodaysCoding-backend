@@ -33,6 +33,48 @@ class UserModel {
     });
     return updateInfo;
   }
+
+  // 유저 카테고리 추가(고정 카테고리)
+  async addCategoryName(userId, categoryName) {
+    const user = await User.findById(userId);
+    const category = user.categoryName;
+
+    category.push({ name: categoryName });
+    const result = await user.save();
+    const categoryNameId = result.categoryName.at(-1)._id;
+
+    return categoryNameId;
+  }
+
+  // 카테고리 삭제
+  async deleteCategoryName(userId, categoryNameId) {
+    const user = await User.findById(userId);
+
+    const oldCategoryNames = user.categoryName;
+    const newCategoryNames = oldCategoryNames.filter(
+      (category) => category._id.toString() !== categoryNameId
+    );
+
+    user.categoryName = newCategoryNames;
+    const result = await user.save();
+
+    return result;
+  }
+
+  // 카테고리 수정
+  async updateCategroyName(userId, categoryNameId, changedName) {
+    const user = await User.findById(userId);
+
+    const AllCategoryNames = user.categoryName;
+    AllCategoryNames.forEach((category) => {
+      if (category._id.toString() === categoryNameId) {
+        category.name = changedName;
+      }
+    });
+
+    const result = await user.save();
+    return result;
+  }
 }
 
 const userModel = new UserModel();
