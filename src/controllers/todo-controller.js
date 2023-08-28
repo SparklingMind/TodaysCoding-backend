@@ -51,19 +51,23 @@ const TodoController = {
   },
 
   // 할일 그룹(이름) 추가 (변경 후)
-  async updateTodoList(req, res, next) {
+  async updateTodo(req, res, next) {
     try {
-      const { categoryId, date } = req.params;
+      const { todoId, userId } = req.params;
+      const { completed, text } = req.body;
 
-      const day = await dayModel.findOrCreateDay({ userId, date });
-      const dateId = day._id;
+      const toUpdate = {
+        ...((completed === true || completed === false) && { completed }),
+        ...(text && { text }),
+      };
 
-      const todos = req.body;
-      const result = await TodoService.addTodo(todoId, todos);
+      console.log(toUpdate);
+
+      const result = await TodoService.changeTodo(todoId, toUpdate);
 
       res.status(201).json(result);
     } catch (error) {
-      res.json({ errorMessage: error.message });
+      res.status(400).json({ errorMessage: error.message });
     }
   },
 
