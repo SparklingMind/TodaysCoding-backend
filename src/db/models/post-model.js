@@ -20,10 +20,10 @@ class PostModel {
   }
 
   async findAndUpdatePost(info) {
-    const { id, name, content } = info;
+    const { id, title, content } = info;
     const result = await Post.findByIdAndUpdate(
       id,
-      { name, content },
+      { title, content },
       { returnOriginal: false }
     );
     return result;
