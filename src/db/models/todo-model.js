@@ -36,7 +36,7 @@ class TodoModel {
   }
 
   async findByUserAndDateId(todoInfo) {
-    const userId = new ObjectId(todoInfo.userId);
+    const { userId } = todoInfo;
     const user = await userModel.findById(userId);
     const categories = user.categoryName;
 
@@ -44,20 +44,14 @@ class TodoModel {
       return { categoryName: cat._id, categoryId: cat._id };
     });
 
-    const todos = await Todo.find(todoInfo);
-
-    console.log(todos);
-
-    allcategories.map((category) => {
-      todos.forEach((todo) => {
-        if (
-          todo.categoryNameId.toString() === category.categoryName.toString()
-        ) {
-          category.todos = todo.todos;
-          category.todoId = todo._id;
-        }
+    const promises = allcategories.map(async (category) => {
+      category.todos = await Todo.find({
+        categoryNameId: category.categoryId,
+        ...todoInfo,
       });
     });
+
+    await Promise.all(promises);
 
     allcategories.map((todo) => {
       categories.forEach((category) => {
@@ -67,7 +61,7 @@ class TodoModel {
       });
     });
 
-    console.log("allcategories: ", allcategories);
+    // console.log("allcategories: ", allcategories);
 
     return allcategories;
   }
