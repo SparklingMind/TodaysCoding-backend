@@ -3,11 +3,10 @@ import { dayModel } from "../db/models/day-model.js";
 import { userModel } from "../db/models/user-model.js";
 
 const TodoService = {
-  async addTodo(todoId, todos) {
-    const result = await todoModel.updateTodos({
-      todoId,
-      todos,
-    });
+  async addTodo(todoInfo) {
+    const { userId, dateId, categoryNameId, completed, text, originalIndex } =
+      todoInfo;
+    const result = await todoModel.create(todoInfo);
 
     return result;
   },

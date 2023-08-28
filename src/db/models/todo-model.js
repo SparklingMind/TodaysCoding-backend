@@ -14,7 +14,8 @@ class TodoModel {
   }
 
   async create(todoInfo) {
-    const { userId, dateId, categoryNameId } = todoInfo;
+    const { userId, dateId, categoryNameId, completed, text, originalIndex } =
+      todoInfo;
     const result = await Todo.create(todoInfo);
     return result;
   }
@@ -41,17 +42,20 @@ class TodoModel {
     const categories = user.categoryName;
 
     const allcategories = categories.map((cat) => {
-      return { categoryName: cat._id, categoryId: cat._id, todos: [] };
+      return { categoryName: cat._id, categoryId: cat._id };
     });
+
     const todos = await Todo.find(todoInfo);
+
+    console.log(todos);
 
     allcategories.map((category) => {
       todos.forEach((todo) => {
-        category.todoId = todo._id;
         if (
           todo.categoryNameId.toString() === category.categoryName.toString()
         ) {
           category.todos = todo.todos;
+          category.todoId = todo._id;
         }
       });
     });
