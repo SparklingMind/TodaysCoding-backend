@@ -69,8 +69,8 @@ const TodoController = {
   // 할 일 이름 삭제
   async deleteTodo(req, res, next) {
     try {
-      const id = req.params.categoryId;
-      const result = await TodoService.removeTodo(id);
+      const { todoId } = req.params;
+      const result = await TodoService.removeTodo(todoId);
 
       if (result === null) {
         return res

@@ -7,12 +7,17 @@ class DayModel {
   // 각 날짜에 이모지를 추가하거나 날짜가 없으면 날짜 데이터 생성 후 이모지 추가
   async updateEmogiOrCreateDay(userInfo, emogi) {
     const day = await Day.findOne(userInfo);
+    console.log(userInfo, emogi);
     if (day === null) {
       const newDay = await Day.create({ ...userInfo, ...emogi });
-      const result = await Day.findByIdAndUpdate(newDay._id, emogi);
+      const result = await Day.findByIdAndUpdate(newDay._id, emogi, {
+        returnOriginal: false,
+      });
       return result;
     } else {
-      const result = await Day.findByIdAndUpdate(day._id, emogi);
+      const result = await Day.findByIdAndUpdate(day._id, emogi, {
+        returnOriginal: false,
+      });
       return result;
     }
 
