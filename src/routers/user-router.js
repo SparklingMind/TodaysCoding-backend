@@ -33,6 +33,7 @@ userRouter.patch(
 );
 // 사용자 정보 삭제(탈퇴)
 userRouter.delete("/users", tokenMiddleware, UserController.deleteUser);
+
 // 카테고리 추가
 userRouter.put(
   "/users/categories",
