@@ -10,14 +10,15 @@ const TodoController = {
   // 아이디와 날짜 별로 할일 초회
   async getTodo(req, res, next) {
     try {
-      const { date } = req.query;
-      const { userId } = req.params;
+      const { date, userId } = req.params;
+
+      const ObjIdUserId = new ObjectId(userId);
 
       const day = await dayModel.findOrCreateDay({ userId, date });
       const dateId = day._id;
 
       const result = await TodoService.findTodoByCategoryId({
-        userId,
+        userId: ObjIdUserId,
         dateId,
       });
 
