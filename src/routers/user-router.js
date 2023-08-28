@@ -41,15 +41,21 @@ userRouter.put(
 );
 // 카테고리 삭제
 userRouter.delete(
-  "/users/categories",
+  "/users/categories/:categoryId",
   tokenMiddleware,
   UserController.deleteCategoryAndTodo
 );
 // 카테고리 수정
 userRouter.patch(
-  "/users/categories",
+  "/users/categories/:categoryId",
   tokenMiddleware,
   UserController.updateCategory
+);
+// 유저 전체 카테고리 조회
+userRouter.get(
+  "/users/categories",
+  tokenMiddleware,
+  UserController.getCategory
 );
 
 export { userRouter };

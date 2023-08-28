@@ -41,9 +41,9 @@ class UserModel {
 
     category.push({ name: categoryName });
     const result = await user.save();
-    const categoryNameId = result.categoryName.at(-1)._id;
+    // const categoryNameId = result.categoryName.at(-1)._id;
 
-    return categoryNameId;
+    return result;
   }
 
   // 카테고리 삭제
@@ -72,7 +72,11 @@ class UserModel {
       }
     });
 
+    console.log(AllCategoryNames);
+
+    user.categoryName = AllCategoryNames;
     const result = await user.save();
+
     return result;
   }
 }

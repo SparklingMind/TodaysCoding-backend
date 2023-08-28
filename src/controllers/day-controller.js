@@ -33,7 +33,7 @@ const DayController = {
         dateId,
       });
 
-      const todos = await TodoService.findTodoByUserIdAndDate({
+      const todos = await TodoService.findTodoByCategoryId({
         userId,
         dateId,
       });
