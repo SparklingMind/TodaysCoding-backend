@@ -4,12 +4,12 @@ import { TodoService } from "../services/todo-service.js";
 import { dayModel } from "../db/models/day-model.js";
 
 const DayController = {
-  async getDayImogi(req, res, next) {
+  async getDayEmoji(req, res, next) {
     try {
       const { userId } = req.params;
       const { startDate, endDate } = req.query;
 
-      const result = await DayService.getFilteredDayImogi({
+      const result = await DayService.getFilteredDayEmoji({
         userId,
         startDate,
         endDate,
@@ -47,12 +47,12 @@ const DayController = {
     }
   },
 
-  async addEmogi(req, res, next) {
+  async addEmoji(req, res, next) {
     try {
       const { userId } = req.params;
-      const { date, emogi } = req.body;
+      const { date, emoji } = req.body;
 
-      const result = await DayService.updateEmogi({ userId, date }, { emogi });
+      const result = await DayService.updateEmoji({ userId, date }, { emoji });
 
       if (!result) {
         return res.status(400).json({ errorMessage: error.message });
@@ -60,7 +60,7 @@ const DayController = {
 
       return res.status(201).json({
         date: result.date,
-        emogi: result.emogi,
+        emoji: result.emoji,
       });
     } catch (error) {
       return res.status(400).json({});

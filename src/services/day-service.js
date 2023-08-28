@@ -2,12 +2,12 @@ import { dayModel } from "../db/models/day-model.js";
 import moment from "moment";
 
 const DayService = {
-  async updateEmogi(userInfo, emogi) {
-    const result = await dayModel.updateEmogiOrCreateDay(userInfo, emogi);
+  async updateEmoji(userInfo, emoji) {
+    const result = await dayModel.updateEmojiOrCreateDay(userInfo, emoji);
     return result;
   },
 
-  async getFilteredDayImogi(dayInfo) {
+  async getFilteredDayEmoji(dayInfo) {
     const { userId, startDate, endDate } = dayInfo;
 
     const allImgoies = await dayModel.findAllDay({ userId });
@@ -15,13 +15,13 @@ const DayService = {
     const processedStartDate = moment(startDate);
     const processedEndDate = moment(endDate);
 
-    const filteredImogies = allImgoies.filter(
+    const filteredEmojies = allImgoies.filter(
       (day) =>
         moment(day.date).isSameOrAfter(processedStartDate) &&
         moment(day.date).isSameOrBefore(processedEndDate)
     );
 
-    return filteredImogies;
+    return filteredEmojies;
   },
 };
 

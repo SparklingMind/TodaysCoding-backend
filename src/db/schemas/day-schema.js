@@ -13,7 +13,7 @@ const daySchema = new Schema(
       required: true,
     },
     // 해당 날짜에 저장되는 이모티콘
-    emogi: {
+    emoji: {
       type: String,
       required: false,
     },
