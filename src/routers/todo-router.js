@@ -27,7 +27,7 @@ todoRouter.patch(
   "/todos/:todoId",
   // todoValidator.updateTodoListValidator,
   tokenMiddleware,
-  TodoController.updateTodoList
+  TodoController.updateTodo
 );
 
 export { todoRouter };
