@@ -7,7 +7,7 @@ import { deliverTodo } from "../modules/todo-modules.js";
 import moment from "moment";
 
 const TodoController = {
-  // 할일 아이디와 날짜 별로 초회
+  // 아이디와 날짜 별로 할일 초회
   async getTodo(req, res, next) {
     try {
       const { date } = req.query;
@@ -23,26 +23,9 @@ const TodoController = {
 
       res.status(200).json(result);
     } catch (error) {
-      res.json({ errorMessage: error.message });
+      res.status(400).json({ errorMessage: error.message });
     }
   },
-
-  // 할일 그룹(이름) 추가
-  // async createTodo(req, res, next) {
-  //   try {
-  //     const userId = new ObjectId(req.params.userId);
-  //     const { date, name } = req.body;
-  //     const result = await TodoService.addTodo({
-  //       userId,
-  //       date,
-  //       name,
-  //     });
-
-  //     res.status(201).json(result);
-  //   } catch (error) {
-  //     res.json({ errorMessage: error.message });
-  //   }
-  // },
 
   // 할일 그룹(이름) 추가 (변경 후)
   async updateTodoList(req, res, next) {
@@ -56,26 +39,6 @@ const TodoController = {
       res.json({ errorMessage: error.message });
     }
   },
-
-  // 할 일 이름 수정 (변경 후)
-  // async updateTodoList(req, res, next) {
-  //   try {
-  //     const id = req.params.categoryId;
-  //     const name = req.body.name;
-
-  //     const result = await TodoService.changeName({ id, name });
-
-  //     if (result === null) {
-  //       return res
-  //         .status(400)
-  //         .json({ message: "해당 todo 목록이 더 이상 존재하지 않습니다." });
-  //     }
-
-  //     res.status(200).json(result);
-  //   } catch (error) {
-  //     res.json({ errorMessage: error.message });
-  //   }
-  // },
 
   // 할 일 이름 삭제
   async deleteTodo(req, res, next) {
@@ -94,26 +57,6 @@ const TodoController = {
       res.json({ errorMessage: error.message });
     }
   },
-
-  // 할 일 목록 수정
-  // async updateTodolist(req, res, next) {
-  //   try {
-  //     const id = req.params.categoryId;
-  //     const todos = req.body;
-  //     console.log([...todos]);
-  //     const result = await todoModel.addTodoList(id, [...todos]);
-
-  //     if (result === null) {
-  //       return res
-  //         .status(400)
-  //         .json({ message: "해당 todo 목록이 더 이상 존재하지 않습니다." });
-  //     }
-
-  //     res.status(200).json(result);
-  //   } catch (error) {
-  //     res.json({ errorMessage: error.message });
-  //   }
-  // },
 };
 
 // const task = cron.schedule(
