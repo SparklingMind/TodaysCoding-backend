@@ -30,6 +30,11 @@ const TodoService = {
     return result;
   },
 
+  async changeTodo(todoId, toUpdate) {
+    const result = await todoModel.updateTodo(todoId, toUpdate);
+    return result;
+  },
+
   async removeTodo(id) {
     const result = await todoModel.deleteTodo(id);
     return result;
