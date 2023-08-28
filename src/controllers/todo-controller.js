@@ -30,7 +30,11 @@ const TodoController = {
   // 할일 그룹(이름) 추가 (변경 후)
   async updateTodoList(req, res, next) {
     try {
-      const { todoId } = req.params;
+      const { categoryId, date } = req.params;
+
+      const day = await dayModel.findOrCreateDay({ userId, date });
+      const dateId = day._id;
+
       const todos = req.body;
       const result = await TodoService.addTodo(todoId, todos);
 
