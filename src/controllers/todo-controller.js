@@ -27,6 +27,28 @@ const TodoController = {
     }
   },
 
+  async createTodo(req, res, next) {
+    try {
+      const { date, completed, text, originalIndex } = req.body;
+      const { userId, categoryId } = req.params;
+
+      const day = await dayModel.findOrCreateDay({ userId, date });
+      const dateId = day._id;
+
+      const result = await TodoService.addTodo({
+        userId,
+        dateId,
+        categoryNameId: categoryId,
+        completed,
+        text,
+        originalIndex,
+      });
+      res.status(201).json(result);
+    } catch (error) {
+      res.status(400).json({ errorMessage: error.message });
+    }
+  },
+
   // 할일 그룹(이름) 추가 (변경 후)
   async updateTodoList(req, res, next) {
     try {
