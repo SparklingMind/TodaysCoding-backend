@@ -35,19 +35,6 @@ const TodoService = {
     const result = await todoModel.deleteTodo(id);
     return result;
   },
-  // async addTodo(info) {
-  //   const { userId, date, name } = info;
-
-  //   const day = await dayModel.findOrCreateDay({ userId, date });
-  //   const dateId = day._id;
-
-  //   const result = await todoModel.create({
-  //     userId,
-  //     dateId,
-  //     name,
-  //   });
-  //   return result;
-  // },
 };
 
 export { TodoService };

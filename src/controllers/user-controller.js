@@ -97,21 +97,18 @@ const UserController = {
     }
   },
 
-  // 카테고리 생성
+  // 카테고리 추가
   async addCategoryAndCreateTodo(req, res, next) {
     try {
       const userId = new ObjectId(req.params.userId);
       const { categoryName, date } = req.body;
 
-      const categoryNameId = await userModel.addCategoryName(
-        userId,
-        categoryName
-      );
+      const result = await userModel.addCategoryName(userId, categoryName);
 
       const day = await dayModel.findOrCreateDay({ userId, date });
-      const dateId = day._id;
+      // const dateId = day._id;
 
-      const result = await todoModel.create({ userId, dateId, categoryNameId });
+      // const result = await todoModel.create({ userId, dateId, categoryNameId });
 
       res.status(201).json(result);
     } catch (error) {
@@ -122,31 +119,32 @@ const UserController = {
   // 카테고리 삭제
   async deleteCategoryAndTodo(req, res, next) {
     try {
-      const userId = new ObjectId(req.params.userId);
-      const { categoryNameId } = req.body;
+      const { userId, categoryId } = req.params;
+      const userObjectId = new ObjectId(userId);
 
-      await userModel.deleteCategoryName(userId, categoryNameId);
+      await userModel.deleteCategoryName(userId, categoryId);
 
       const result = await todoModel.deleteTodo({
         userId,
-        categoryNameId,
+        categoryNameId: categoryId,
       });
 
       res.status(204).json(result);
     } catch (error) {
-      res.json({ errorMessage: error.message });
+      res.status(400).json({ errorMessage: error.message });
     }
   },
 
   // 카테고리 수정
   async updateCategory(req, res, next) {
     try {
-      const userId = new ObjectId(req.params.userId);
-      const { categoryNameId, changedName } = req.body;
+      const { userId, categoryId } = req.params;
+      const userObjectId = new ObjectId(userId);
+      const { changedName } = req.body;
 
       const result = await userModel.updateCategroyName(
-        userId,
-        categoryNameId,
+        userObjectId,
+        categoryId,
         changedName
       );
 
@@ -157,6 +155,17 @@ const UserController = {
   },
 
   // 카테고리 조회
+  async getCategory(req, res, next) {
+    try {
+      const userId = new ObjectId(req.params.userId);
+      const user = await userModel.findById(userId);
+      const categories = user.categoryName;
+
+      res.status(201).json(categories);
+    } catch (error) {
+      res.json({ errorMessage: error.message });
+    }
+  },
 };
 
 export { UserController };

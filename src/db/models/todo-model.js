@@ -1,5 +1,8 @@
 import { model } from "mongoose";
 import { todoSchema } from "../schemas/todo-schema.js";
+import { userModel } from "./user-model.js";
+
+import { ObjectId } from "mongodb";
 
 const Todo = model("todos", todoSchema);
 
@@ -33,9 +36,37 @@ class TodoModel {
   }
 
   async findByUserAndDateId(todoInfo) {
-    const result = await Todo.find(todoInfo).populate("categoryNameId");
-    // .populate({ path: "", model: "users" });/
-    return result;
+    const userId = new ObjectId(todoInfo.userId);
+    const user = await userModel.findById(userId);
+    const categories = user.categoryName;
+
+    const allcategories = categories.map((cat) => {
+      return { categoryName: cat._id, todos: [] };
+    });
+    console.log("allcategories: ", allcategories.length);
+    const todos = await Todo.find(todoInfo);
+
+    allcategories.map((category) => {
+      todos.forEach((todo) => {
+        if (
+          todo.categoryNameId.toString() === category.categoryName.toString()
+        ) {
+          category.todos = todo.todos;
+        }
+      });
+    });
+
+    allcategories.map((todo) => {
+      categories.forEach((category) => {
+        if (todo.categoryName.toString() === category._id.toString()) {
+          todo.categoryName = category.name;
+        }
+      });
+    });
+
+    console.log("allcategories: ", allcategories);
+
+    return allcategories;
   }
 
   // async oldCreate(todoInfo) {
