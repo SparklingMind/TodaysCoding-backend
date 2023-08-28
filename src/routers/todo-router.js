@@ -6,7 +6,7 @@ import { tokenMiddleware } from "../middlewares/token-middleware.js";
 const todoRouter = Router();
 
 // 해당 아이디가 특정 날짜에 만든 todo들 모두 조회
-todoRouter.get("/todos", tokenMiddleware, TodoController.getTodo);
+todoRouter.get("/todos/:date", tokenMiddleware, TodoController.getTodo);
 
 // 할 일 목록 추가
 todoRouter.post(
