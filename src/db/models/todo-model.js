@@ -41,13 +41,13 @@ class TodoModel {
     const categories = user.categoryName;
 
     const allcategories = categories.map((cat) => {
-      return { categoryName: cat._id, todos: [] };
+      return { categoryName: cat._id, categoryId: cat._id, todos: [] };
     });
-    console.log("allcategories: ", allcategories.length);
     const todos = await Todo.find(todoInfo);
 
     allcategories.map((category) => {
       todos.forEach((todo) => {
+        category.todoId = todo._id;
         if (
           todo.categoryNameId.toString() === category.categoryName.toString()
         ) {
