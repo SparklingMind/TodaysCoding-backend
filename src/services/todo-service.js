@@ -25,7 +25,6 @@ const TodoService = {
 
   async changeName(info) {
     const { id, name } = info;
-
     const result = await todoModel.updateName(info);
     return result;
   },

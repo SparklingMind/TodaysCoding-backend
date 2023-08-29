@@ -71,8 +71,6 @@ class UserModel {
       }
     });
 
-    console.log(AllCategoryNames);
-
     user.categoryName = AllCategoryNames;
     const result = await user.save();
 

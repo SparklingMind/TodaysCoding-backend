@@ -3,7 +3,6 @@ import { DayService } from "../services/day-service.js";
 import { TodoService } from "../services/todo-service.js";
 import { PostService } from "../services/post-service.js";
 import { userModel } from "../db/models/user-model.js";
-import { dayModel } from "../db/models/day-model.js";
 import { ObjectId } from "mongodb";
 import { todoModel } from "../db/models/todo-model.js";
 
@@ -72,11 +71,6 @@ const UserController = {
       const id = new ObjectId(req.params.userId);
       const result = await userModel.findById(id);
       res.status(200).json(result);
-      // {
-      //   id: result.id,
-      //   email: result.email,
-      //   name: result.name,
-      // }
     } catch (error) {
       res.json({ errorMessage: error.message });
     }
@@ -86,13 +80,28 @@ const UserController = {
   async updateUser(req, res, next) {
     try {
       const _id = new ObjectId(req.params.userId);
-      const { id, email, name, password } = req.body;
+      const {
+        id,
+        email,
+        name,
+        password,
+        nickname,
+        aboutMe,
+        birthDate,
+        gender,
+        profileImageUrl,
+      } = req.body;
 
       const toUpdate = {
         ...(id && { id }),
         ...(email && { email }),
         ...(name && { name }),
         ...(password && { password }),
+        ...(nickname && { nickname }),
+        ...(aboutMe && { aboutMe }),
+        ...(birthDate && { birthDate }),
+        ...(gender && { gender }),
+        ...(profileImageUrl && { profileImageUrl }),
       };
 
       const checkUpdate = await UserService.updateUserInfo(_id, toUpdate);
@@ -132,7 +141,7 @@ const UserController = {
 
       res.status(201).json(result);
     } catch (error) {
-      res.json({ errorMessage: error.message });
+      res.status(400).json({ errorMessage: error.message });
     }
   },
 

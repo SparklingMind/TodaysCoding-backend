@@ -12,13 +12,11 @@ const TodoController = {
     try {
       const { date, userId } = req.params;
 
-      const ObjIdUserId = new ObjectId(userId);
-
       const day = await dayModel.findOrCreateDay({ userId, date });
       const dateId = day._id;
 
       const result = await TodoService.findTodos({
-        userId: ObjIdUserId,
+        userId,
         dateId,
       });
 

@@ -27,7 +27,7 @@ userRouter.get("/users", tokenMiddleware, UserController.getUser);
 // 사용자 정보 수정
 userRouter.patch(
   "/users",
-  userValidator.updateUserValidator,
+  // userValidator.updateUserValidator,
   tokenMiddleware,
   UserController.updateUser
 );
