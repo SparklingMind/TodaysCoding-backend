@@ -23,6 +23,11 @@ const DayService = {
 
     return filteredEmojies;
   },
+
+  async deleteAllDataByUserId(userId) {
+    const result = await dayModel.deleteDaysByUserId({ userId });
+    return result;
+  },
 };
 
 export { DayService };

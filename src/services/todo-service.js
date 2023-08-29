@@ -39,6 +39,11 @@ const TodoService = {
     const result = await todoModel.deleteTodo(id);
     return result;
   },
+
+  async deleteAllDataByUserId(userId) {
+    const result = await todoModel.deleteTodosByUserId({ userId });
+    return result;
+  },
 };
 
 export { TodoService };

@@ -33,6 +33,11 @@ class PostModel {
     const result = await Post.findByIdAndDelete(id);
     return result;
   }
+
+  async deletePostsByUserId(userId) {
+    const result = await Post.deleteMany(userId);
+    return result;
+  }
 }
 
 const postModel = new PostModel();

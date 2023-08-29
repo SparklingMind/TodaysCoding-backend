@@ -72,6 +72,11 @@ class TodoModel {
     });
     return result;
   }
+
+  async deleteTodosByUserId(userId) {
+    const result = await Todo.deleteMany(userId);
+    return result;
+  }
 }
 
 const todoModel = new TodoModel();

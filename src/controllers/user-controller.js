@@ -1,4 +1,7 @@
 import { UserService } from "../services/user-service.js";
+import { DayService } from "../services/day-service.js";
+import { TodoService } from "../services/todo-service.js";
+import { PostService } from "../services/post-service.js";
 import { userModel } from "../db/models/user-model.js";
 import { dayModel } from "../db/models/day-model.js";
 import { ObjectId } from "mongodb";
@@ -89,11 +92,15 @@ const UserController = {
   // 사용자 정보 삭제(회원탈퇴)
   async deleteUser(req, res, next) {
     try {
-      const _id = new ObjectId(req.params.userId);
-      const result = await userModel.deleteById(_id);
+      const { userId } = req.params;
+      const result = await userModel.deleteById(userId);
+      await DayService.deleteAllDataByUserId(userId);
+      await TodoService.deleteAllDataByUserId(userId);
+      await PostService.deleteAllDataByUserId(userId);
+
       res.status(204).json(result);
     } catch (error) {
-      res.json({ errorMessage: error.message });
+      res.status(400).json({ errorMessage: error.message });
     }
   },
 

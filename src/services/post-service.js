@@ -36,6 +36,11 @@ const PostService = {
     const result = await postModel.deletePost(id);
     return result;
   },
+
+  async deleteAllDataByUserId(userId) {
+    const result = await postModel.deletePostsByUserId({ userId });
+    return result;
+  },
 };
 
 export { PostService };

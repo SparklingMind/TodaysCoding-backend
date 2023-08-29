@@ -43,6 +43,11 @@ class DayModel {
 
     return result;
   }
+
+  async deleteDaysByUserId(userId) {
+    const result = await Day.deleteMany(userId);
+    return result;
+  }
 }
 
 const dayModel = new DayModel();
