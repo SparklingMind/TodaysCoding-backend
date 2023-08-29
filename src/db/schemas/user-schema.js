@@ -26,6 +26,22 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    nickname: {
+      type: String,
+      required: true,
+    },
+    aboutMe: {
+      type: String,
+      required: false,
+    },
+    birthDate: {
+      type: String,
+      required: false,
+    },
+    gender: {
+      type: String,
+      required: false,
+    },
     // 유저 비밀번호 (해쉬)
     password: {
       type: String,

@@ -8,7 +8,7 @@ const userRouter = Router();
 // 회원가입
 userRouter.post(
   "/users/register",
-  userValidator.registerValidator,
+  // userValidator.registerValidator,
   UserController.createUser
 );
 // 회원가입 아이디 중복 확인
