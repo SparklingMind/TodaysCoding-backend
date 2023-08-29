@@ -33,6 +33,7 @@ const UserService = {
       aboutMe: result.aboutMe,
       birthDate: result.birthDate,
       gender: result.gender,
+      profileImgUrl: result.profileIgUrl,
     };
   },
 
@@ -76,9 +77,18 @@ const UserService = {
       toUpdate.password = hashedPassword;
     }
 
-    const checkUpdate = await userModel.update(_id, toUpdate);
+    const result = await userModel.update(_id, toUpdate);
 
-    return checkUpdate;
+    return {
+      name: result.name,
+      id: result.id,
+      email: result.email,
+      nickname: result.nickname,
+      aboutMe: result.aboutMe,
+      birthDate: result.birthDate,
+      gender: result.gender,
+      profileImgUrl: result.profileImgUrl,
+    };
   },
 };
 

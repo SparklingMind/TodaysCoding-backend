@@ -48,7 +48,7 @@ const userSchema = new Schema(
       required: true,
     },
     // 프로필 사진
-    profileImageUrl: {
+    profileImgUrl: {
       type: String,
       required: false,
     },

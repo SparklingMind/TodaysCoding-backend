@@ -42,7 +42,7 @@ class UserModel {
     category.push({ name: categoryName });
     const result = await user.save();
 
-    return result;
+    return result.categoryName;
   }
 
   // 카테고리 삭제
@@ -74,7 +74,7 @@ class UserModel {
     user.categoryName = AllCategoryNames;
     const result = await user.save();
 
-    return result;
+    return result.categoryName;
   }
 }
 

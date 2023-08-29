@@ -3,7 +3,6 @@ import { DayService } from "../services/day-service.js";
 import { TodoService } from "../services/todo-service.js";
 import { PostService } from "../services/post-service.js";
 import { userModel } from "../db/models/user-model.js";
-import { ObjectId } from "mongodb";
 import { todoModel } from "../db/models/todo-model.js";
 
 const UserController = {
@@ -68,7 +67,7 @@ const UserController = {
   // 사용자 정보 조회(마이페이지)
   async getUser(req, res, next) {
     try {
-      const id = new ObjectId(req.params.userId);
+      const { userId } = req.params;
       const result = await userModel.findById(id);
       res.status(200).json(result);
     } catch (error) {
@@ -79,7 +78,7 @@ const UserController = {
   // 사용자 정보 수정(마이페이지)
   async updateUser(req, res, next) {
     try {
-      const _id = new ObjectId(req.params.userId);
+      const _id = req.params.userId;
       const {
         id,
         email,
@@ -89,7 +88,7 @@ const UserController = {
         aboutMe,
         birthDate,
         gender,
-        profileImageUrl,
+        profileImgUrl,
       } = req.body;
 
       const toUpdate = {
@@ -101,16 +100,12 @@ const UserController = {
         ...(aboutMe && { aboutMe }),
         ...(birthDate && { birthDate }),
         ...(gender && { gender }),
-        ...(profileImageUrl && { profileImageUrl }),
+        ...(profileImgUrl && { profileImgUrl }),
       };
 
       const checkUpdate = await UserService.updateUserInfo(_id, toUpdate);
 
-      res.status(200).json({
-        name: checkUpdate.name,
-        id: checkUpdate.id,
-        email: checkUpdate.email,
-      });
+      res.status(200).json(checkUpdate);
     } catch (error) {
       res.json({ errorMessage: error.message });
     }
@@ -134,7 +129,7 @@ const UserController = {
   // 카테고리 추가
   async addCategory(req, res, next) {
     try {
-      const userId = new ObjectId(req.params.userId);
+      const { userId } = req.params;
       const { categoryName } = req.body;
 
       const result = await userModel.addCategoryName(userId, categoryName);
@@ -167,11 +162,10 @@ const UserController = {
   async updateCategory(req, res, next) {
     try {
       const { userId, categoryId } = req.params;
-      const userObjectId = new ObjectId(userId);
       const { changedName } = req.body;
 
       const result = await userModel.updateCategroyName(
-        userObjectId,
+        userId,
         categoryId,
         changedName
       );
@@ -185,7 +179,7 @@ const UserController = {
   // 카테고리 조회
   async getCategory(req, res, next) {
     try {
-      const userId = new ObjectId(req.params.userId);
+      const { userId } = req.params;
       const user = await userModel.findById(userId);
       const categories = user.categoryName;
 

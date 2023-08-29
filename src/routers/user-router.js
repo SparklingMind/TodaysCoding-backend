@@ -8,7 +8,7 @@ const userRouter = Router();
 // 회원가입
 userRouter.post(
   "/users/register",
-  // userValidator.registerValidator,
+  userValidator.registerValidator,
   UserController.createUser
 );
 // 회원가입 아이디 중복 확인
@@ -27,7 +27,7 @@ userRouter.get("/users", tokenMiddleware, UserController.getUser);
 // 사용자 정보 수정
 userRouter.patch(
   "/users",
-  // userValidator.updateUserValidator,
+  userValidator.updateUserValidator,
   tokenMiddleware,
   UserController.updateUser
 );
@@ -37,6 +37,7 @@ userRouter.delete("/users", tokenMiddleware, UserController.deleteUser);
 // 카테고리 추가
 userRouter.put(
   "/users/categories",
+  userValidator.createCatValidator,
   tokenMiddleware,
   UserController.addCategory
 );
@@ -49,6 +50,7 @@ userRouter.delete(
 // 카테고리 수정
 userRouter.patch(
   "/users/categories/:categoryId",
+  userValidator.updateCatValidator,
   tokenMiddleware,
   UserController.updateCategory
 );

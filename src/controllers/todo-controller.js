@@ -1,9 +1,7 @@
 import { TodoService } from "../services/todo-service.js";
 import { todoModel } from "../db/models/todo-model.js";
 import { dayModel } from "../db/models/day-model.js";
-import { ObjectId } from "mongodb";
 import cron from "node-cron";
-import { deliverTodo } from "../modules/todo-modules.js";
 import moment from "moment";
 
 const TodoController = {
@@ -58,8 +56,6 @@ const TodoController = {
         ...((completed === true || completed === false) && { completed }),
         ...(text && { text }),
       };
-
-      console.log(toUpdate);
 
       const result = await TodoService.changeTodo(todoId, toUpdate);
 

@@ -11,21 +11,16 @@ todoRouter.get("/todos/:date", tokenMiddleware, TodoController.getTodo);
 // 할 일 목록 추가
 todoRouter.post(
   "/todos/:categoryId",
-  // todoValidator.updateTodoListValidator,
+  todoValidator.creatTodoValidator,
   tokenMiddleware,
   TodoController.createTodo
 );
 // 할 일 목록 삭제
-todoRouter.delete(
-  "/todos/:todoId",
-  // todoValidator.updateTodoListValidator,
-  tokenMiddleware,
-  TodoController.deleteTodo
-);
+todoRouter.delete("/todos/:todoId", tokenMiddleware, TodoController.deleteTodo);
 // 할 일 목록 수정
 todoRouter.patch(
   "/todos/:todoId",
-  // todoValidator.updateTodoListValidator,
+  todoValidator.updateTodoValidator,
   tokenMiddleware,
   TodoController.updateTodo
 );

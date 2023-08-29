@@ -1,7 +1,6 @@
 import { postModel } from "../db/models/post-model.js";
 import { dayModel } from "../db/models/day-model.js";
 import { PostService } from "../services/post-service.js";
-import { ObjectId } from "mongodb";
 
 const PostController = {
   async getPosts(req, res, next) {
@@ -46,7 +45,7 @@ const PostController = {
   },
   async createPost(req, res, next) {
     try {
-      const userId = new ObjectId(req.params.userId);
+      const { userId } = req.params;
       const { date, title, content } = req.body;
       const result = await PostService.addPost({
         userId,
