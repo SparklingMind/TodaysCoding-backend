@@ -120,7 +120,6 @@ const UserController = {
   async deleteCategoryAndTodo(req, res, next) {
     try {
       const { userId, categoryId } = req.params;
-      const userObjectId = new ObjectId(userId);
 
       await userModel.deleteCategoryName(userId, categoryId);
 
