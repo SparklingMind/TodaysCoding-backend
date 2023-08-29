@@ -11,8 +11,26 @@ const UserController = {
   // 회원 추가(회원가입)
   async createUser(req, res, next) {
     try {
-      const { name, id, email, password } = req.body;
-      const result = await UserService.addUser({ name, id, email, password });
+      const {
+        name,
+        id,
+        email,
+        password,
+        nickname,
+        aboutMe,
+        birthDate,
+        gender,
+      } = req.body;
+      const result = await UserService.addUser({
+        name,
+        id,
+        email,
+        password,
+        nickname,
+        aboutMe,
+        birthDate,
+        gender,
+      });
       res.status(201).json(result);
     } catch (error) {
       res.json({ errorMessage: error.message });
@@ -41,8 +59,8 @@ const UserController = {
   async login(req, res, next) {
     try {
       const { id, password } = req.body;
-      const result = await UserService.giveToken({ id, password });
-      res.status(201).json(result);
+      const tokens = await UserService.giveToken({ id, password });
+      res.status(201).json(tokens);
     } catch (error) {
       res.json({ errorMessage: error.message });
     }
@@ -105,17 +123,12 @@ const UserController = {
   },
 
   // 카테고리 추가
-  async addCategoryAndCreateTodo(req, res, next) {
+  async addCategory(req, res, next) {
     try {
       const userId = new ObjectId(req.params.userId);
-      const { categoryName, date } = req.body;
+      const { categoryName } = req.body;
 
       const result = await userModel.addCategoryName(userId, categoryName);
-
-      const day = await dayModel.findOrCreateDay({ userId, date });
-      // const dateId = day._id;
-
-      // const result = await todoModel.create({ userId, dateId, categoryNameId });
 
       res.status(201).json(result);
     } catch (error) {

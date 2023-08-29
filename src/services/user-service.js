@@ -8,7 +8,8 @@ import { issueToken } from "../modules/token-modules.js";
 const UserService = {
   // 비밀번호만 암호화하여 DB에 회원 추가
   async addUser(userInfo) {
-    const { name, id, email, password } = userInfo;
+    const { name, id, email, password, nickname, aboutMe, birthDate, gender } =
+      userInfo;
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -17,6 +18,10 @@ const UserService = {
       id,
       email,
       password: hashedPassword,
+      nickname,
+      aboutMe,
+      birthDate,
+      gender,
     });
 
     return {
@@ -24,6 +29,10 @@ const UserService = {
       name: result.name,
       id: result.id,
       email: result.email,
+      nickname: result.nickname,
+      aboutMe: result.aboutMe,
+      birthDate: result.birthDate,
+      gender: result.gender,
     };
   },
 

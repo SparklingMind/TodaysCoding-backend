@@ -38,7 +38,7 @@ userRouter.delete("/users", tokenMiddleware, UserController.deleteUser);
 userRouter.put(
   "/users/categories",
   tokenMiddleware,
-  UserController.addCategoryAndCreateTodo
+  UserController.addCategory
 );
 // 카테고리 삭제
 userRouter.delete(

@@ -41,7 +41,6 @@ class UserModel {
 
     category.push({ name: categoryName });
     const result = await user.save();
-    // const categoryNameId = result.categoryName.at(-1)._id;
 
     return result;
   }

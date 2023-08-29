@@ -11,7 +11,7 @@ const TodoService = {
     return result;
   },
 
-  async findTodoByCategoryId(todoInfo) {
+  async findTodos(todoInfo) {
     const { userId, dateId } = todoInfo;
     const result = await todoModel.findByUserAndDateId(todoInfo);
     return result;

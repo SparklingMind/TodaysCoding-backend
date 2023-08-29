@@ -55,7 +55,7 @@ const DayController = {
       const result = await DayService.updateEmoji({ userId, date }, { emoji });
 
       if (!result) {
-        return res.status(400).json({ errorMessage: error.message });
+        return res.status(400).json({ errorMessage: "Could not update emoji" });
       }
 
       return res.status(201).json({
@@ -63,7 +63,7 @@ const DayController = {
         emoji: result.emoji,
       });
     } catch (error) {
-      return res.status(400).json({});
+      return res.status(400).json({ errorMessage: error.message });
     }
   },
 };

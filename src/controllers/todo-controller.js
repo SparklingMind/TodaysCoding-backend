@@ -17,7 +17,7 @@ const TodoController = {
       const day = await dayModel.findOrCreateDay({ userId, date });
       const dateId = day._id;
 
-      const result = await TodoService.findTodoByCategoryId({
+      const result = await TodoService.findTodos({
         userId: ObjIdUserId,
         dateId,
       });
