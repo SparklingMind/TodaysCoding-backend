@@ -72,11 +72,6 @@ const UserService = {
   },
 
   async updateUserInfo(_id, toUpdate) {
-    if (toUpdate.password) {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      toUpdate.password = hashedPassword;
-    }
-
     const result = await userModel.update(_id, toUpdate);
 
     return {

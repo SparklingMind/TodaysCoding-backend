@@ -4,6 +4,7 @@ import { TodoService } from "../services/todo-service.js";
 import { PostService } from "../services/post-service.js";
 import { userModel } from "../db/models/user-model.js";
 import { todoModel } from "../db/models/todo-model.js";
+import bcrypt from "bcrypt";
 
 const UserController = {
   // 회원 추가(회원가입)
@@ -79,6 +80,7 @@ const UserController = {
   async updateUser(req, res, next) {
     try {
       const _id = req.params.userId;
+      const profileImgUrl = req.file.location;
       const {
         id,
         email,
@@ -88,7 +90,6 @@ const UserController = {
         aboutMe,
         birthDate,
         gender,
-        profileImgUrl,
       } = req.body;
 
       const toUpdate = {
@@ -107,7 +108,33 @@ const UserController = {
 
       res.status(200).json(checkUpdate);
     } catch (error) {
-      res.json({ errorMessage: error.message });
+      res.status(400).json({ errorMessage: error.message });
+    }
+  },
+
+  async resetPassword(req, res, next) {
+    try {
+      const { userId } = req.params;
+      const { currentPassword, newPassword } = req.body;
+
+      const user = await userModel.findById(userId);
+      const hashedUserPassword = user.password;
+
+      const match = await bcrypt.compare(currentPassword, hashedUserPassword);
+
+      if (!match) {
+        throw new Error("current password is not correct");
+      }
+
+      const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+      const checkUpdate = await UserService.updateUserInfo(userId, {
+        password: hashedNewPassword,
+      });
+
+      res.status(200).json({ message: "password is changed" });
+    } catch (error) {
+      res.status(400).json({ errorMessage: error.message });
     }
   },
 
@@ -147,7 +174,7 @@ const UserController = {
 
       await userModel.deleteCategoryName(userId, categoryId);
 
-      const result = await todoModel.deleteTodo({
+      const result = await todoModel.deleteTodos({
         userId,
         categoryNameId: categoryId,
       });
