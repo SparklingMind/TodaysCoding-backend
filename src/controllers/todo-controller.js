@@ -1,8 +1,6 @@
 import { TodoService } from "../services/todo-service.js";
 import { dayModel } from "../db/models/day-model.js";
 import { todoModel } from "../db/models/todo-model.js";
-import cron from "node-cron";
-import dayjs from "dayjs";
 
 const TodoController = {
   // 아이디와 날짜 별로 할일 초회
@@ -80,53 +78,6 @@ const TodoController = {
       res.status(204).json(result);
     } catch (error) {
       res.json({ errorMessage: error.message });
-    }
-  },
-
-  async deliverTodo(userId) {
-    const now = dayjs();
-
-    const todayDate = now.format("YYYYMMDD");
-    const yesterdayDate = now.subtract(1, "day").format("YYYYMMDD");
-    // const todayDate = "20230812";
-    // const yesterdayDate = "20230811";
-
-    const today = await dayModel.findOrCreateDay({
-      userId,
-      date: todayDate,
-    });
-    const todayId = today._id.toString();
-
-    const yesterday = await dayModel.findOrCreateDay({
-      userId,
-      date: yesterdayDate,
-    });
-    const yesterdayId = yesterday._id;
-
-    console.log("todayId: ", todayId, "yesterdayId: ", yesterdayId);
-
-    const yesterdayTodos = await TodoService.findNotCompletedTodos({
-      userId,
-      dateId: yesterdayId,
-    });
-
-    const CopyOfYesterdayTodos = JSON.parse(JSON.stringify(yesterdayTodos));
-
-    console.log("before: ", CopyOfYesterdayTodos);
-
-    const todayTodos = CopyOfYesterdayTodos.map((todo) => ({
-      userId: todo.userId,
-      dateId: todayId,
-      categoryNameId: todo.categoryNameId,
-      completed: todo.completed,
-      text: todo.text,
-      originalIndex: todo.originalIndex,
-    }));
-
-    console.log("after: ", todayTodos);
-
-    for (const todayTodo of todayTodos) {
-      await todoModel.create(todayTodo);
     }
   },
 };

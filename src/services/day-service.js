@@ -1,5 +1,9 @@
 import { dayModel } from "../db/models/day-model.js";
-import moment from "moment";
+import dayjs from "dayjs";
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore.js";
+import isSameOrAfter from "dayjs/plugin/isSameOrAfter.js";
+dayjs.extend(isSameOrBefore);
+dayjs.extend(isSameOrAfter);
 
 const DayService = {
   async updateEmoji(userInfo, emoji) {
@@ -12,13 +16,13 @@ const DayService = {
 
     const allImgoies = await dayModel.findAllDay({ userId });
 
-    const processedStartDate = moment(startDate);
-    const processedEndDate = moment(endDate);
+    const processedStartDate = dayjs(startDate);
+    const processedEndDate = dayjs(endDate);
 
     const filteredEmojies = allImgoies.filter(
       (day) =>
-        moment(day.date).isSameOrAfter(processedStartDate) &&
-        moment(day.date).isSameOrBefore(processedEndDate)
+        dayjs(day.date).isSameOrAfter(processedStartDate) &&
+        dayjs(day.date).isSameOrBefore(processedEndDate)
     );
 
     return filteredEmojies;

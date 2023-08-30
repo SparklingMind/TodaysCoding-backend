@@ -8,6 +8,8 @@ import { userRouter } from "./routers/user-router.js";
 import { todoRouter } from "./routers/todo-router.js";
 import { postRouter } from "./routers/post-router.js";
 import { dayRouter } from "./routers/day-router.js";
+import { allUserDeliverTodo } from "./modules/cron-modules.js";
+import cron from "node-cron";
 
 const app = express();
 
@@ -32,12 +34,13 @@ app.use(history());
 
 export { app };
 
-// const task = cron.schedule(
-//   "*/10 * * * * *",
-//   function () {
-//     TodoController.deliverTodo("64ec406cf007cb0f5198e681");
-//   },
-//   { scheduled: false }
-// );
+const task = cron.schedule(
+  // "1 0 0 * * *",
+  "*/10 * * * * *",
+  function () {
+    allUserDeliverTodo();
+  },
+  { scheduled: false }
+);
 
 // task.start();

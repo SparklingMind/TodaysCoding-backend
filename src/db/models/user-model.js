@@ -4,6 +4,10 @@ import { userSchema } from "../schemas/user-schema.js";
 const User = model("users", userSchema);
 
 class UserModel {
+  async find(userInfo) {
+    const result = await User.find(userInfo);
+    return result;
+  }
   // DB에 유저 추가
   async create(userInfo) {
     const result = await User.create(userInfo);
