@@ -65,11 +65,11 @@ const TodoController = {
     }
   },
 
-  // 할 일 이름 삭제
+  // todo 삭제
   async deleteTodo(req, res, next) {
     try {
       const { todoId } = req.params;
-      const result = await TodoService.removeTodo(todoId);
+      const result = await TodoService.removeATodo(todoId);
 
       if (result === null) {
         return res
@@ -132,13 +132,3 @@ const TodoController = {
 };
 
 export { TodoController };
-
-const task = cron.schedule(
-  "*/10 * * * * *",
-  function () {
-    TodoController.deliverTodo("64ec406cf007cb0f5198e681");
-  },
-  { scheduled: false }
-);
-
-// task.start();

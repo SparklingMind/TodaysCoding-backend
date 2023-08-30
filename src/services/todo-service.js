@@ -34,8 +34,13 @@ const TodoService = {
     return result;
   },
 
-  async removeTodo(id) {
-    const result = await todoModel.deleteTodo(id);
+  async removeATodo(id) {
+    const result = await todoModel.deleteATodo(id);
+    return result;
+  },
+
+  async removeTodos(id) {
+    const result = await todoModel.deleteTodos(id);
     return result;
   },
 

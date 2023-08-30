@@ -19,7 +19,12 @@ class TodoModel {
     return result;
   }
 
-  async deleteTodo(todoInfo) {
+  async deleteATodo(id) {
+    const result = await Todo.findByIdAndDelete(id);
+    return result;
+  }
+
+  async deleteTodos(todoInfo) {
     const result = await Todo.deleteMany(todoInfo);
     return result;
   }
