@@ -12,7 +12,6 @@ import { dayRouter } from "./routers/day-router.js";
 const app = express();
 
 app.use(cors());
-app.use(history());
 
 // 프론트에서 json 파일을 보내면, req.body에 자동으로 객체 형태로 데이터가 들어가도록 함.
 app.use(express.json());
@@ -29,4 +28,16 @@ app.use("/api", todoRouter);
 app.use("/api", postRouter);
 app.use("/api", dayRouter);
 
+app.use(history());
+
 export { app };
+
+// const task = cron.schedule(
+//   "*/10 * * * * *",
+//   function () {
+//     TodoController.deliverTodo("64ec406cf007cb0f5198e681");
+//   },
+//   { scheduled: false }
+// );
+
+// task.start();

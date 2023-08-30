@@ -2,8 +2,14 @@ import { Router } from "express";
 import { UserController } from "../controllers/user-controller.js";
 import { userValidator } from "../middlewares/validators/user-validator.js";
 import { tokenMiddleware } from "../middlewares/token-middleware.js";
+import { upload } from "../modules/image-modules.js";
 
 const userRouter = Router();
+
+userRouter.post("/upload", upload.single("image"), (req, res) => {
+  // 파일 업로드 성공
+  res.json({ url: req.file.location });
+});
 
 // 회원가입
 userRouter.post(
@@ -24,13 +30,22 @@ userRouter.post(
 );
 // 사용자 정보 조회
 userRouter.get("/users", tokenMiddleware, UserController.getUser);
+
 // 사용자 정보 수정
 userRouter.patch(
   "/users",
-  userValidator.updateUserValidator,
+  upload.single("image"),
+  // userValidator.updateUserValidator,
   tokenMiddleware,
   UserController.updateUser
 );
+
+userRouter.patch(
+  "/users/password",
+  tokenMiddleware,
+  UserController.resetPassword
+);
+
 // 사용자 정보 삭제(탈퇴)
 userRouter.delete("/users", tokenMiddleware, UserController.deleteUser);
 
