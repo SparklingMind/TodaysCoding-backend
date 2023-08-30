@@ -1,8 +1,8 @@
 import { TodoService } from "../services/todo-service.js";
-import { todoModel } from "../db/models/todo-model.js";
 import { dayModel } from "../db/models/day-model.js";
+import { todoModel } from "../db/models/todo-model.js";
 import cron from "node-cron";
-import moment from "moment";
+import dayjs from "dayjs";
 
 const TodoController = {
   // 아이디와 날짜 별로 할일 초회
@@ -83,15 +83,5 @@ const TodoController = {
     }
   },
 };
-
-// const task = cron.schedule(
-//   "*/2 * * * * *",
-//   function () {
-//     deliverTodo();
-//   },
-//   { scheduled: false }
-// );
-
-// task.start();
 
 export { TodoController };

@@ -43,6 +43,14 @@ const TodoService = {
     const result = await todoModel.deleteTodosByUserId({ userId });
     return result;
   },
+
+  async findNotCompletedTodos(todoInfo) {
+    const result = await todoModel.find({
+      ...todoInfo,
+      completed: false,
+    });
+    return result;
+  },
 };
 
 export { TodoService };

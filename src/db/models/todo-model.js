@@ -8,7 +8,6 @@ const Todo = model("todos", todoSchema);
 
 class TodoModel {
   async find(info) {
-    const { userId, dateId } = info;
     const result = await Todo.find(info);
     return result;
   }

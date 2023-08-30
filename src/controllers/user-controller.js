@@ -68,7 +68,7 @@ const UserController = {
   async getUser(req, res, next) {
     try {
       const { userId } = req.params;
-      const result = await userModel.findById(id);
+      const result = await userModel.findById(userId);
       res.status(200).json(result);
     } catch (error) {
       res.json({ errorMessage: error.message });
