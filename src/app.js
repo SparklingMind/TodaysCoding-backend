@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import cors from "cors";
+import history from "connect-history-api-fallback";
 
 import { userRouter } from "./routers/user-router.js";
 import { todoRouter } from "./routers/todo-router.js";
@@ -11,6 +12,7 @@ import { dayRouter } from "./routers/day-router.js";
 const app = express();
 
 app.use(cors());
+app.use(history());
 
 // 프론트에서 json 파일을 보내면, req.body에 자동으로 객체 형태로 데이터가 들어가도록 함.
 app.use(express.json());

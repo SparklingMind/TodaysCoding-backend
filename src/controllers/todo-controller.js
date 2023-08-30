@@ -82,6 +82,63 @@ const TodoController = {
       res.json({ errorMessage: error.message });
     }
   },
+
+  async deliverTodo(userId) {
+    const now = dayjs();
+
+    const todayDate = now.format("YYYYMMDD");
+    const yesterdayDate = now.subtract(1, "day").format("YYYYMMDD");
+    // const todayDate = "20230812";
+    // const yesterdayDate = "20230811";
+
+    const today = await dayModel.findOrCreateDay({
+      userId,
+      date: todayDate,
+    });
+    const todayId = today._id.toString();
+
+    const yesterday = await dayModel.findOrCreateDay({
+      userId,
+      date: yesterdayDate,
+    });
+    const yesterdayId = yesterday._id;
+
+    console.log("todayId: ", todayId, "yesterdayId: ", yesterdayId);
+
+    const yesterdayTodos = await TodoService.findNotCompletedTodos({
+      userId,
+      dateId: yesterdayId,
+    });
+
+    const CopyOfYesterdayTodos = JSON.parse(JSON.stringify(yesterdayTodos));
+
+    console.log("before: ", CopyOfYesterdayTodos);
+
+    const todayTodos = CopyOfYesterdayTodos.map((todo) => ({
+      userId: todo.userId,
+      dateId: todayId,
+      categoryNameId: todo.categoryNameId,
+      completed: todo.completed,
+      text: todo.text,
+      originalIndex: todo.originalIndex,
+    }));
+
+    console.log("after: ", todayTodos);
+
+    for (const todayTodo of todayTodos) {
+      await todoModel.create(todayTodo);
+    }
+  },
 };
 
 export { TodoController };
+
+const task = cron.schedule(
+  "*/10 * * * * *",
+  function () {
+    TodoController.deliverTodo("64ec406cf007cb0f5198e681");
+  },
+  { scheduled: false }
+);
+
+// task.start();
