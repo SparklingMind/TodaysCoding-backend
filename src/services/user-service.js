@@ -86,7 +86,7 @@ const UserService = {
   async updateUserInfo(_id, toUpdate) {
     const user = await userModel.findById(_id);
 
-    if (user.profileImgUrl) {
+    if (toUpdate.profileImgUrl) {
       const currentImageUrl = user.profileImgUrl.slice(52);
       deleteImg(currentImageUrl);
     }
