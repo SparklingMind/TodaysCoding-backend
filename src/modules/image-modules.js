@@ -11,7 +11,7 @@ const s3 = new aws.S3({
   region: "ap-northeast-2",
 });
 
-export const upload = multer({
+const upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: "todaycoding",
@@ -22,3 +22,18 @@ export const upload = multer({
     },
   }),
 });
+
+const deleteImg = (currentImageUrl) =>
+  s3.deleteObject(
+    {
+      Bucket: "todaycoding", // 사용자 버켓 이름
+      Key: currentImageUrl, // 버켓 내 경로
+    },
+    (err, data) => {
+      if (err) {
+        throw new Error({ errorMessage: err.message });
+      }
+    }
+  );
+
+export { upload, deleteImg };

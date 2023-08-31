@@ -80,7 +80,11 @@ const UserController = {
   async updateUser(req, res, next) {
     try {
       const _id = req.params.userId;
-      const profileImgUrl = req.file.location;
+      let profileImgUrl = "";
+      if (req.file) {
+        profileImgUrl = req.file.location;
+      }
+
       const {
         id,
         email,
@@ -142,7 +146,8 @@ const UserController = {
   async deleteUser(req, res, next) {
     try {
       const { userId } = req.params;
-      const result = await userModel.deleteById(userId);
+
+      await UserService.deleteAllDataByUserId(userId);
       await DayService.deleteAllDataByUserId(userId);
       await TodoService.deleteAllDataByUserId(userId);
       await PostService.deleteAllDataByUserId(userId);

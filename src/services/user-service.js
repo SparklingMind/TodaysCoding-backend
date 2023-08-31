@@ -1,9 +1,21 @@
 import { userModel } from "../db/models/user-model.js";
-import { tokenModel } from "../db/models/token-model.js";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import "dotenv/config";
 import { issueToken } from "../modules/token-modules.js";
+import { deleteImg } from "../modules/image-modules.js";
+import bcrypt from "bcrypt";
+import "dotenv/config";
+
+import multer from "multer";
+import multerS3 from "multer-s3";
+import aws from "aws-sdk";
+import "dotenv/config";
+
+const { AWS_ACCESS_KEY, AWS_SECRET_KEY } = process.env;
+
+const s3 = new aws.S3({
+  accessKeyId: AWS_ACCESS_KEY,
+  secretAccessKey: AWS_SECRET_KEY,
+  region: "ap-northeast-2",
+});
 
 const UserService = {
   // 비밀번호만 암호화하여 DB에 회원 추가
@@ -72,6 +84,13 @@ const UserService = {
   },
 
   async updateUserInfo(_id, toUpdate) {
+    const user = await userModel.findById(_id);
+
+    if (user.profileImgUrl) {
+      const currentImageUrl = user.profileImgUrl.slice(52);
+      deleteImg(currentImageUrl);
+    }
+
     const result = await userModel.update(_id, toUpdate);
 
     return {
@@ -84,6 +103,21 @@ const UserService = {
       gender: result.gender,
       profileImgUrl: result.profileImgUrl,
     };
+  },
+
+  async deleteAllDataByUserId(userId) {
+    // 이미지 삭제
+    const user = await userModel.findById(userId);
+
+    if (user.profileImgUrl) {
+      const currentImageUrl = user.profileImgUrl.slice(52);
+      deleteImg(currentImageUrl);
+    }
+
+    // user 정보 삭제
+    const result = await userModel.deleteById(userId);
+
+    return result;
   },
 };
 
