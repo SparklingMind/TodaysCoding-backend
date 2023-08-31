@@ -147,10 +147,10 @@ const UserController = {
     try {
       const { userId } = req.params;
 
-      await UserService.deleteAllDataByUserId(userId);
+      await PostService.deleteAllDataByUserId(userId);
       await DayService.deleteAllDataByUserId(userId);
       await TodoService.deleteAllDataByUserId(userId);
-      await PostService.deleteAllDataByUserId(userId);
+      const result = await UserService.deleteAllDataByUserId(userId);
 
       res.status(204).json(result);
     } catch (error) {
