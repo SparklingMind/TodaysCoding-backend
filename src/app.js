@@ -34,13 +34,10 @@ app.use(history());
 
 export { app };
 
-const task = cron.schedule(
-  // "1 0 0 * * *",
-  "*/10 * * * * *",
+cron.schedule(
+  "1 0 0 * * *",
   function () {
     allUserDeliverTodo();
   },
-  { scheduled: false }
+  { scheduled: true }
 );
-
-// task.start();

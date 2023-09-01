@@ -3,14 +3,13 @@ import { userModel } from "../db/models/user-model.js";
 import { dayModel } from "../db/models/day-model.js";
 import { todoModel } from "../db/models/todo-model.js";
 import dayjs from "dayjs";
+import { ObjectId } from "mongoose";
 
 async function deliverTodo(userId) {
   const now = dayjs();
 
   const todayDate = now.format("YYYYMMDD");
   const yesterdayDate = now.subtract(1, "day").format("YYYYMMDD");
-  // const todayDate = "20230812";
-  // const yesterdayDate = "20230811";
 
   const today = await dayModel.findOrCreateDay({
     userId,
@@ -49,6 +48,6 @@ export async function allUserDeliverTodo() {
   const allUsers = await userModel.find({});
 
   for (const user of allUsers) {
-    deliverTodo(user._id);
+    deliverTodo(user._id.toString());
   }
 }
