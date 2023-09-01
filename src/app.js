@@ -17,6 +17,7 @@ app.use(cors());
 
 // 프론트에서 json 파일을 보내면, req.body에 자동으로 객체 형태로 데이터가 들어가도록 함.
 app.use(express.json());
+app.use(history());
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -29,8 +30,6 @@ app.use("/api", userRouter);
 app.use("/api", todoRouter);
 app.use("/api", postRouter);
 app.use("/api", dayRouter);
-
-app.use(history());
 
 export { app };
 
