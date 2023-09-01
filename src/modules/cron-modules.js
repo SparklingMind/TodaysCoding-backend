@@ -8,11 +8,8 @@ import { ObjectId } from "mongoose";
 async function deliverTodo(userId) {
   const now = dayjs();
 
-  // const todayDate = now.format("YYYYMMDD");
-  // const yesterdayDate = now.subtract(1, "day").format("YYYYMMDD");
-
-  const todayDate = "20230902";
-  const yesterdayDate = "20230901";
+  const todayDate = now.format("YYYYMMDD");
+  const yesterdayDate = now.subtract(1, "day").format("YYYYMMDD");
 
   const today = await dayModel.findOrCreateDay({
     userId,
