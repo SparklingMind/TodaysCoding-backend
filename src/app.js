@@ -33,10 +33,13 @@ app.use("/api", dayRouter);
 
 export { app };
 
-cron.schedule(
-  "1 0 0 * * *",
+const task = cron.schedule(
+  "*/10 * * * * *",
   function () {
     allUserDeliverTodo();
+    console.log("한번 완료!");
   },
   { scheduled: true }
 );
+
+task.start();
