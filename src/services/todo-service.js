@@ -3,31 +3,57 @@ import { dayModel } from "../db/models/day-model.js";
 import { userModel } from "../db/models/user-model.js";
 
 const TodoService = {
-  async addTodo(info) {
-    const { id, date, title } = info;
+  async addTodo(todoInfo) {
+    const { userId, dateId, categoryNameId, completed, text, originalIndex } =
+      todoInfo;
+    const result = await todoModel.create(todoInfo);
 
-    const day = await dayModel.find({ userId: id, date });
-    const user = await userModel.findById(id);
-    const userId = user._id;
-    const dateId = day._id;
+    return result;
+  },
 
-    const result = await todoModel.create({
-      userId,
-      dateId,
-      title,
+  async findTodos(todoInfo) {
+    const { userId, dateId } = todoInfo;
+    const result = await todoModel.findByUserAndDateId(todoInfo);
+    return result;
+  },
+
+  async findTodoByUserIdAndDate(info) {
+    const { userId, dateId } = info;
+    const posts = await todoModel.find({ userId, dateId });
+    return posts;
+  },
+
+  async changeName(info) {
+    const { id, name } = info;
+    const result = await todoModel.updateName(info);
+    return result;
+  },
+
+  async changeTodo(todoId, toUpdate) {
+    const result = await todoModel.updateTodo(todoId, toUpdate);
+    return result;
+  },
+
+  async removeATodo(id) {
+    const result = await todoModel.deleteATodo(id);
+    return result;
+  },
+
+  async removeTodos(id) {
+    const result = await todoModel.deleteTodos(id);
+    return result;
+  },
+
+  async deleteAllDataByUserId(userId) {
+    const result = await todoModel.deleteTodosByUserId({ userId });
+    return result;
+  },
+
+  async findNotCompletedTodos(todoInfo) {
+    const result = await todoModel.find({
+      ...todoInfo,
+      completed: false,
     });
-    return result;
-  },
-
-  async changeTitle(info) {
-    const { id, title } = info;
-
-    const result = await todoModel.updateTitle(info);
-    return result;
-  },
-
-  async removeTodo(id) {
-    const result = await todoModel.deleteTodo(id);
     return result;
   },
 };

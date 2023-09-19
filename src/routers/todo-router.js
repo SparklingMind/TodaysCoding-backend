@@ -1,28 +1,28 @@
 import { Router } from "express";
 import { TodoController } from "../controllers/todo-controller.js";
 import { todoValidator } from "../middlewares/validators/todo-validator.js";
+import { tokenMiddleware } from "../middlewares/token-middleware.js";
 
 const todoRouter = Router();
 
-// 할 일 그룹(제목) 추가
+// 해당 아이디가 특정 날짜에 만든 todo들 모두 조회
+todoRouter.get("/todos/:date", tokenMiddleware, TodoController.getTodo);
+
+// 할 일 목록 추가
 todoRouter.post(
-  "/todo/:userId",
-  todoValidator.createTitleValidator,
+  "/todos/:categoryId",
+  todoValidator.creatTodoValidator,
+  tokenMiddleware,
   TodoController.createTodo
 );
-// 할 일 제목 수정
+// 할 일 목록 삭제
+todoRouter.delete("/todos/:todoId", tokenMiddleware, TodoController.deleteTodo);
+// 할 일 목록 수정
 todoRouter.patch(
-  "/todo/:categoryId",
-  todoValidator.updateTitleValidator,
+  "/todos/:todoId",
+  todoValidator.updateTodoValidator,
+  tokenMiddleware,
   TodoController.updateTodo
-);
-// 할 일 제목 삭제
-todoRouter.delete("/todo/:categoryId", TodoController.deleteTodo);
-// 할 일 수정
-todoRouter.patch(
-  "/todolist/:categoryId",
-  todoValidator.updateTodoListValidator,
-  TodoController.updateTodolist
 );
 
 export { todoRouter };

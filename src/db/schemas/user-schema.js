@@ -1,5 +1,13 @@
 import { Schema } from "mongoose";
 
+const categoryNameSchema = new Schema({
+  name: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+});
+
 const userSchema = new Schema(
   {
     // 유저 이름
@@ -18,13 +26,29 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    nickname: {
+      type: String,
+      required: true,
+    },
+    aboutMe: {
+      type: String,
+      required: false,
+    },
+    birthDate: {
+      type: String,
+      required: false,
+    },
+    gender: {
+      type: String,
+      required: false,
+    },
     // 유저 비밀번호 (해쉬)
     password: {
       type: String,
       required: true,
     },
     // 프로필 사진
-    profileImageUrl: {
+    profileImgUrl: {
       type: String,
       required: false,
     },
@@ -33,6 +57,7 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    categoryName: [categoryNameSchema],
   },
   {
     collection: "users",

@@ -9,6 +9,11 @@ class PostModel {
     return result;
   }
 
+  async findById(id) {
+    const result = await Post.findById(id);
+    return result;
+  }
+
   async create(info) {
     const result = await Post.create(info);
     return result;
@@ -26,6 +31,11 @@ class PostModel {
 
   async deletePost(id) {
     const result = await Post.findByIdAndDelete(id);
+    return result;
+  }
+
+  async deletePostsByUserId(userId) {
+    const result = await Post.deleteMany(userId);
     return result;
   }
 }
